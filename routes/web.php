@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
 
@@ -31,7 +32,5 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::get('/documents', function () {
-        return view('documents.folders.index');
-    });
+    Route::get('/documents', [FolderController::class, 'index']);
 });
