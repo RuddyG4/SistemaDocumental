@@ -28,4 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
+
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::get('/documents', function () {
+        return view('documents.folders.index');
+    });
 });

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +23,7 @@ class LoginController extends Controller
             'password' => ['required']
         ]);
         if (!Auth::validate($credentials)) {
-            return redirect('login')->withErrors(['failedAuth' =>'El nombre de usuario o contraseña son incorrectos, verifique e intente nuevamente']);
+            return redirect('login')->withErrors(['failedAuth' =>'El correo y/o contraseña son incorrectos, verifique e intente nuevamente']);
         }
         $user = Auth::getProvider()->retrieveByCredentials($credentials); // Recupera la instancia User perteneciente a $credentials.
         Auth::login($user);

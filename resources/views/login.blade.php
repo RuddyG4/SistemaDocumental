@@ -30,7 +30,7 @@
     <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/1d8ccf6f72.js" crossorigin="anonymous"></script>
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.3') }}" rel="stylesheet" />
@@ -48,10 +48,21 @@
                                     <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
                                     <p class="mb-0">Enter your email and password to sign in</p>
                                 </div>
+
+                                @error('failedAuth')
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <span class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                                    <span class="alert-text"><strong>Failed authentication</strong> {{ $message }}</span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                @enderror
+
                                 <div class="card-body">
                                     <form role="form" method="POST" action="{{ route('login.submit') }}">
                                         @csrf
-                                        
+
                                         <label>Email</label>
                                         <div class="mb-3">
                                             <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
