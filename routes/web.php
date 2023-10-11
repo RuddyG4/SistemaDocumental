@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Users\RolePermissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/documents', [FolderController::class, 'index']);
+    
+    Route::get('/roles', [RolePermissionController::class, 'index']);
 });
