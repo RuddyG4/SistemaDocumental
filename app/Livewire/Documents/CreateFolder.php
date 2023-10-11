@@ -3,12 +3,16 @@
 namespace App\Livewire\Documents;
 
 use App\Models\Documents\Folder;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class CreateFolder extends Component
 {
     public $folder_name = '';
     public $description = '';
+    #[Reactive]
+    public $currentFolderID;
+    
     public function render()
     {
         return view('livewire.documents.create-folder');
@@ -22,6 +26,7 @@ class CreateFolder extends Component
         ]);
 
         $validated['user_id'] = auth()->user()->id;
+        $validated['parent_id'] = $this->currentFolderID;
         $validated['tenan_id'] = auth()->user()->customer->id;
 
         Folder::create($validated);

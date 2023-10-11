@@ -45,7 +45,7 @@
 </div>
 @push('scripts')
 <script>
-    const modal = new bootstrap.Modal(document.getElementById('createFolder'));;
+    const modal = new bootstrap.Modal(document.getElementById('createFolder'));
     document.addEventListener('livewire:initialized', () => {
        @this.on('close-modal', (event) => {
            modal.hide();
