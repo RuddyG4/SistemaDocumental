@@ -4,6 +4,7 @@ namespace App\Livewire\Documents;
 
 use App\Models\Documents\Folder;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ShowDocuments extends Component
@@ -19,7 +20,8 @@ class ShowDocuments extends Component
         $this->loadFolders();
     }
 
-    protected function loadFolders()
+    #[On('folder-created')]
+    public function loadFolders()
     {
         $this->folders = Folder::where('tenan_id', Auth::user()->customer->id)->where('parent_id', null)->get();
     }

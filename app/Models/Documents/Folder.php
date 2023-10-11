@@ -13,9 +13,10 @@ class Folder extends Model
     
     protected $fillable = [
         'folder_name',
-        'folder_description',
+        'description',
         'parent_id',
         'user_id',
+        'tenan_id',
         'created_at',
         'updated_at'
     ];

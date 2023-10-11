@@ -4,13 +4,10 @@
             <div class="col-8 d-flex align-items-center">
                 <h6 class="mb-0">{{ Auth::user()->customer->company_name }}</h6>
             </div>
-            <div class="col-2 text-end">
-                <button type="button" class="btn btn-secondary btn-sm mb-0">
-                    <span class="btn-inner--icon"><i class="fa fa-plus"></i></span>
-                    <span class="btn-inner--text">&nbsp; New folder</span>
-                </button>
+            <div class="col-xl-2 col-sm-6 text-end">
+                <livewire:documents.create-folder />
             </div>
-            <div class="col-2 text-end">
+            <div class="col-xl-2 col-sm-6 text-end">
                 <button type="button" class="btn btn-info btn-sm mb-0">
                     <span class="btn-inner--icon"><i class="fa fa-plus"></i></span>
                     <span class="btn-inner--text">&nbsp; Upload file</span>
