@@ -19,18 +19,23 @@ class ShowDocuments extends Component
     {
         return view('livewire.documents.show-documents');
     }
-    
+
     public function mount()
     {
         $this->updateView();
     }
 
+    /**
+     * Load the folders associated with the current user's tenant and parent folder.
+     *
+     * @return void
+     */
     #[On('folder-created')]
     public function loadFolders()
     {
-        $this->folders = Folder::where('tenan_id', Auth::user()->customer->id)->where('parent_id', $this->currentFolderID)->get();
+        $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->customer->id)->where('parent_id', $this->currentFolderID)->get();
     }
-    
+
     #[On('file-uploaded')]
     public function loadFiles()
     {
@@ -50,14 +55,13 @@ class ShowDocuments extends Component
             $this->currentPath = [];
             return;
         }
-        
+
         if (array_key_exists($folder->id, $this->currentPath)) {
-            foreach($this->currentPath as $key => $path) {
-                $deleteRemaining = false;
+            $deleteRemaining = false;
+            foreach ($this->currentPath as $key => $path) {
                 if ($deleteRemaining) {
                     unset($this->currentPath[$key]);
-                }
-                if ($key == $folder->id) {
+                } elseif ($key == $folder->id) {
                     $deleteRemaining = true;
                 }
             }
@@ -66,6 +70,11 @@ class ShowDocuments extends Component
         $this->currentPath[$folder->id] = $folder->folder_name;
     }
 
+    /**
+     * Updates the view by loading folders and files.
+     *
+     * @return void
+     */
     public function updateView()
     {
         $this->loadFolders();
