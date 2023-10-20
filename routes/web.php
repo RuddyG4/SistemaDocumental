@@ -3,6 +3,7 @@
 use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Users\RolePermissionController;
+use App\Livewire\Users\Users\IndexUser;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
+
+    Route::get('/users', IndexUser::class)->name('users.index');
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
