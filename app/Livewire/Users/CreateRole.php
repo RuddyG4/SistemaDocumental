@@ -29,4 +29,9 @@ class CreateRole extends Component
         $this->dispatch('role-created');
         $this->dispatch('close-create-role-modal');
     }
+
+    public function cancel()
+    {
+        //
+    }
 }

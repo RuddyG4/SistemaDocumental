@@ -20,7 +20,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="user_username">Username</label>
-                                    <input type="text" wire:model="username" class="form-control" id="user_username" placeholder="Username">
+                                    <input type="text" wire:model="username" class="form-control" id="user_username_create" placeholder="Username">
                                 </div>
                                 @error('username')
                                 <span class="error" style="color:red">{{ $message }}</span>
@@ -32,7 +32,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="user_email">Email</label>
-                                    <input type="email" wire:model="email" class="form-control" id="user_email" placeholder="example@example.com">
+                                    <input type="email" wire:model="email" class="form-control" id="user_email_create" placeholder="example@example.com">
                                 </div>
                                 @error('email')
                                 <span class="error" style="color:red">{{ $message }}</span>
@@ -44,7 +44,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="role_id">Role</label>
-                                    <select class="form-control" wire:model.live="role_id" id="role_id">
+                                    <select class="form-control" wire:model="role_id" id="role_id_create">
                                         <option value="">-- select a role --</option>
                                         @foreach ($this->getRoles() as $role)
                                         <option value="{{ $role->id }}">{{ $role->role_name }}</option>

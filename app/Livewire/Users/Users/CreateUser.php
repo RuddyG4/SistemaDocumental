@@ -9,7 +9,7 @@ use Livewire\Component;
 class CreateUser extends Component
 {
     public $username, $email, $role_id;
-    
+
     public function render()
     {
         return view('livewire.users.users.create-user');
@@ -17,7 +17,7 @@ class CreateUser extends Component
 
     public function cancel()
     {
-        //
+        $this->reset(['username', 'email', 'role_id']);
     }
 
     public function createUser()

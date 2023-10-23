@@ -82,6 +82,11 @@ class ShowDocuments extends Component
         $this->loadFiles();
     }
 
+    public function downloadFolder(Folder $folder)
+    {
+        //
+    }
+    
     public function downloadFile(File $file)
     {
         return Storage::download($file->file_path);

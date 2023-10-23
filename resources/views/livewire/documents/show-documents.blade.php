@@ -62,11 +62,12 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuFolderButton{{ $folder->id }}">
                                 <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
-                                <li><button type="button" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
+                                <li><button type="button" wire:click="downloadFolder( {{ $folder->id }} )" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                             </ul>
                         </td>
                     </tr>
                     @endforeach
+
                     @foreach($files as $file)
                     <tr wire:key="{{ $file->id }}">
                         <td>
