@@ -5,6 +5,7 @@ namespace App\Livewire\Documents;
 use App\Models\Documents\File;
 use App\Models\Documents\Folder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -22,7 +23,7 @@ class ShowDocuments extends Component
 
     public function mount()
     {
-        $this->updateView();
+        $this->loadView();
     }
 
     /**
@@ -33,20 +34,20 @@ class ShowDocuments extends Component
     #[On('folder-created')]
     public function loadFolders()
     {
-        $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->customer->id)->where('parent_id', $this->currentFolderID)->get();
+        $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
     }
 
     #[On('file-uploaded')]
     public function loadFiles()
     {
-        $this->files = File::where('tenan_id', Auth::user()->customer->id)->where('folder_id', $this->currentFolderID)->get();
+        $this->files = File::where('tenan_id', Auth::user()->tenan_id)->where('folder_id', $this->currentFolderID)->get();
     }
 
     public function openFolder(Folder $folder = null)
     {
         $this->currentFolderID = $folder->id;
         $this->updatePath($folder);
-        $this->updateView();
+        $this->loadView();
     }
 
     public function updatePath(Folder $folder)
@@ -75,9 +76,14 @@ class ShowDocuments extends Component
      *
      * @return void
      */
-    public function updateView()
+    public function loadView()
     {
         $this->loadFolders();
         $this->loadFiles();
+    }
+
+    public function downloadFile(File $file)
+    {
+        return Storage::download($file->file_path);
     }
 }

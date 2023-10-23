@@ -56,10 +56,14 @@
                         <td class="align-middle text-center">
                             <span class="text-secondary text-xs font-weight-bold"> --- </span>
                         </td>
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
+                        <td class="align-middle dropstart">
+                            <button type="button" class="btn btn-link text-secondary mb-0" aria-haspopup="true" id="dropdownMenuFolderButton{{ $folder->id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v text-xs"></i>
                             </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuFolderButton{{ $folder->id }}">
+                                <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
+                                <li><button type="button" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
+                            </ul>
                         </td>
                     </tr>
                     @endforeach
@@ -68,7 +72,7 @@
                         <td>
                             <div class="d-flex px-2 py-1 cursor-pointer">
                                 <div>
-                                <i class="fa-solid fa-file me-3"></i>
+                                    <i class="fa-solid fa-file me-3"></i>
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     <h6 class="mb-0 text-sm">{{ $file->file_name }}</h6>
@@ -85,10 +89,14 @@
                         <td class="align-middle text-center">
                             <span class="text-secondary text-xs font-weight-bold"> --- </span>
                         </td>
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
+                        <td class="align-middle dropstart">
+                            <button type="button" class="btn btn-link text-secondary mb-0" aria-haspopup="true" id="dropdownMenuFileButton{{ $file->id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v text-xs"></i>
                             </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuFileButton{{ $file->id }}">
+                                <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
+                                <li><button type="button" wire:click="downloadFile({{ $file->id }})" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
+                            </ul>
                         </td>
                     </tr>
                     @endforeach

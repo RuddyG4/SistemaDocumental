@@ -96,7 +96,8 @@ insert into customers(name, email, password, company_name) values
 
 -- roles
 insert into roles (role_name, tenan_id) values
-('Administrator', 1);
+('Administrator', 1),
+('Medico', 1);
 
 -- permissions
 insert into permissions (name, description, tenan_id) values

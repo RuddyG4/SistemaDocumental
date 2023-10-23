@@ -10,7 +10,7 @@
                     Users
                 </h6>
             </div>
-            <livewire:users.create-role />
+            <livewire:users.users.create-user />
         </div>
 
         <div class="card-body px-0 pt-0 pb-2">
@@ -20,10 +20,11 @@
                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $user)
+                        @foreach($users = $this->loadUsers() as $user)
                         <tr wire:key="{{ $user->id }}">
                             <td>
                                 <div class="d-flex px-2 py-1 cursor-pointer" wire:click="">
@@ -40,9 +41,24 @@
                                     </div>
                                 </div>
                             </td>
+                            
+                            <td>
+                                <div class="d-flex px-2 py-1 cursor-pointer" wire:click="">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">{{ $user->role->role_name }}</h6>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                {{ $users->links()}}
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
