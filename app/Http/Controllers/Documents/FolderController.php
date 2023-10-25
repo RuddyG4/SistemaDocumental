@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Documents;
 
 use App\Http\Controllers\Controller;
+use App\Models\Documents\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FolderController extends Controller
 {
@@ -36,7 +38,14 @@ class FolderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $file = File::find($id);
+        $rutaDocumento = $file->file_path;
+        if (Storage::exists($rutaDocumento)) {
+            $existe = true;
+        } else {
+            $existe = false;
+        }
+        return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento'));
     }
 
     /**

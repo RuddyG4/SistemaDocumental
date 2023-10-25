@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/documents', [FolderController::class, 'index']);
-    
+
     Route::get('/roles', [RolePermissionController::class, 'index']);
+
+    Route::get('/view-document/{id}', [FolderController::class, 'show'])->name('view.document');
 });
