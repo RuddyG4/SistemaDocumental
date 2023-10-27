@@ -25,6 +25,10 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+    Route::get('/register-view', [LoginController::class, 'registerView'])->name('auth.register_view');
+    Route::post('/register', [LoginController::class, 'register'])->name('auth.register');
+    Route::get('/reset-password-view', [LoginController::class, 'resetPasswordView'])->name('auth.reset_password_view');
+    Route::post('/reset-password', [LoginController::class, 'resetPassword'])->name('auth.reset_password');
 });
 
 Route::middleware('auth')->group(function () {
@@ -37,6 +41,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/documents', [FolderController::class, 'index']);
-    
+
     Route::get('/roles', [RolePermissionController::class, 'index']);
+
+    Route::get('/view-document/{id}', [FolderController::class, 'show'])->name('view.document');
+
+    Route::post('/update-version-doc', [FolderController::class, 'actualizarVerionDelDocumento'])->name('update.version_doc');
+
+    Route::get('/search-document', [FolderController::class, 'indexSearchDocument'])->name('search.document_index');
 });
+
+Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');
