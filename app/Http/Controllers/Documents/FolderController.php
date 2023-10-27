@@ -4,11 +4,17 @@ namespace App\Http\Controllers\Documents;
 
 use App\Http\Controllers\Controller;
 use App\Models\Documents\File;
+use App\Models\Documents\VersionHistory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Livewire\WithFileUploads;
 class FolderController extends Controller
 {
+    use WithFileUploads;
+
+    public $file;
+
     /**
      * Display a listing of the resource.
      */
@@ -45,7 +51,23 @@ class FolderController extends Controller
         } else {
             $existe = false;
         }
-        return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento'));
+        $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
+        $pila_archivos = new Collection();
+        $lista_archivos = new Collection();
+        $pila_archivos->push($file);
+        $lista_archivos->push($file);
+
+        //! tener cuidado con el ciclo infinito
+        while (count($pila_archivos)!=0) {
+            $aux = $pila_archivos->pop();
+            $version_anterior = $aux->version_history->version_anterior;
+            if (isset($version_anterior)) {
+                $file_aux = File::find($version_anterior->file_id);
+                $pila_archivos->push($file_aux);
+                $lista_archivos->push($file_aux);
+            }
+        }
+        return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento','file','extension','lista_archivos'));
     }
 
     /**
@@ -70,5 +92,48 @@ class FolderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    /**
+     * ? Recibe el nuevo documento y lo registra, ademas edita el documento anterior para que no sea el actual
+     */
+    public function actualizarVerionDelDocumento(Request $request){
+        $this->file = $request->archivo;
+
+        if ($request->hasFile('archivo')) {
+            $path = $this->file->store('documents');
+            $id_file_antiguo = $request->id_file_antiguo;
+            $file_antiguo = File::find($id_file_antiguo);
+            $file_nuevo = new File();
+            $file_nuevo->file_name = $this->file->getClientOriginalName();
+            $file_nuevo->file_path = $path;
+            $file_nuevo->folder_id = $file_antiguo->folder_id;
+            $file_nuevo->tenan_id = auth()->user()->tenan_id;
+            $file_nuevo->save();
+            $file_antiguo->folder_id = -1;
+            $file_antiguo->save();
+
+            VersionHistory::create([
+                'version_date' => now(),
+                'path' => $path,
+                'user_id' => auth()->user()->id,
+                'name_user' => auth()->user()->username,
+                'file_id' => $file_nuevo->id,
+                'tenan_id' => auth()->user()->tenan_id,
+                'version_anterior_id' => $file_antiguo->version_history->id,
+                'version' => $file_antiguo->version_history->version + 1,
+            ]);
+        }
+        return redirect()->route('view.document', $file_nuevo->id);
+    }
+    public function preVisualizacion(string $id){
+        $file = File::find($id);
+        $rutaDocumento = $file->file_path;
+        $file = Storage::disk('public')->get($rutaDocumento);
+        return response($file, 200, ['Content-Type' => 'application/pdf']);
+    }
+    public function indexSearchDocument(){
+        dd("llegando con exito");
     }
 }
