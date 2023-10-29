@@ -1,16 +1,12 @@
-<div>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-warning btn-sm mb-0" data-bs-toggle="modal" data-bs-target="#moveToFolder">
-        <span class="btn-inner--icon"><i class="fa-solid fa-folder-tree"></i></span>
-        <span class="btn-inner--text">&nbsp; Mover</span>
+<li>
+    <button type="button"  data-bs-toggle="modal" data-bs-target="#moveToFolder" class="dropdown-item">
+        <i class="fa-solid fa-pen-to-square"></i>
+        &nbsp;Mover
     </button>
-    <!--   <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#moveToFolder">
-        <i class="fa-solid fa-download"></i> &nbsp;Mover
-    </button> -->
 
+    @once
     <!-- Modal -->
-    <div class="modal fade" id="moveToFolder" tabindex="-1" role="dialog" aria-labelledby="createNewFolder" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="moveToFolder" tabindex="-1" role="dialog" aria-labelledby="createNewFolder" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -18,9 +14,9 @@
                         <span>{{ Auth::user()->customer->company_name }}/</span>
                         @foreach($currentPath as $key => $path)
                         @if ($loop->last)
-                        <span >{{ $path }}</span>
+                        <span>{{ $path }}</span>
                         @else
-                        <span >{{ $path }}/</span>
+                        <span>{{ $path }}/</span>
                         @endif
                         @endforeach
                     </h6>
@@ -65,8 +61,9 @@
             </div>
         </div>
     </div>
+    @endonce
+</li>
 
-</div>
 @push('scripts')
 <script>
     const modal = new bootstrap.Modal(document.getElementById('moveToFolder'));
