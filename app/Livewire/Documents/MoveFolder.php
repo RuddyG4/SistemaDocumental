@@ -11,9 +11,8 @@ class MoveFolder extends Component
 {
     public $folders;
     public $currentPath = [];
-   /*  #[Reactive]
-    public $currentFolderID; */
-     public $currentFolderID = null;
+    #[Reactive]
+    public $currentFolderID;
      public $fileID;
 
     public function mount()

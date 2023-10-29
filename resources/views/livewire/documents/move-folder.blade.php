@@ -5,6 +5,7 @@
     </button>
 
     @once
+    @teleport('body')
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="moveToFolder" tabindex="-1" role="dialog" aria-labelledby="createNewFolder" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -30,8 +31,6 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                                    < |>
-                                        </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,16 +60,18 @@
             </div>
         </div>
     </div>
+    @endteleport
     @endonce
+    
 </li>
 
-@push('scripts')
+@pushOnce('scripts')
 <script>
-    const modal = new bootstrap.Modal(document.getElementById('moveToFolder'));
+    const moveFileModal = new bootstrap.Modal(document.getElementById('moveToFolder'));
     document.addEventListener('livewire:initialized', () => {
         @this.on('close-modal', (event) => {
-            modal.hide();
+            moveFileModal.hide();
         });
     });
 </script>
-@endpush
+@endPushOnce

@@ -32,9 +32,6 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Owner</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last modified</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
-                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                            < |>
-                        </th>
                         <th class="text-secondary opacity-7">Actions</th>
                     </tr>
                 </thead>
@@ -57,9 +54,6 @@
                         </td>
                         <td class="align-middle text-center text-sm">
                             <span class="text-secondary text-xs font-weight-bold">{{ $folder->updated_at }}</span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold"> --- </span>
                         </td>
                         <td class="align-middle text-center">
                             <span class="text-secondary text-xs font-weight-bold"> --- </span>
@@ -98,23 +92,16 @@
                         <td class="align-middle text-center">
                             <span class="text-secondary text-xs font-weight-bold"> --- </span>
                         </td>
-                        <td class="align-middle text-center" style="color:white;">
-                            <!-- <livewire:documents.move-folder /> -->
-                        </td>
                         <td class="align-middle dropstart">
                             <button type="button" class="btn btn-link text-secondary mb-0" aria-haspopup="true" id="dropdownMenuFileButton{{ $file->id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v text-xs"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuFileButton{{ $file->id }}">
                                 <!-- TODO: hacer que de el boton de esta lista  -->
-                                {{-- <li> <livewire:documents.move-folder :$currentFolderID /> </li> --}}
                                 <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
-                                <livewire:documents.move-folder :fileID="$file->id" />
+                                <livewire:documents.move-folder :fileID="$file->id" :key="$file->id" />
                                 <li><button type="button" wire:click="downloadFile({{ $file->id }})" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                                 <li><a type="button" href="{{route('view.document',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-eye"></i> &nbsp;Ver</a></li>
-
-                                <!-- <i class="fa-solid fa-bolt"></i> -->
-                                <!-- <li><a type="button" href="{{route('view.document_d',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-eye"></i> &nbsp;Ver</a></li> -->
                             </ul>
                         </td>
                     </tr>
