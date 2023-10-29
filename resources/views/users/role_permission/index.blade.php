@@ -5,7 +5,7 @@
 
     <div class="row">
         <div class="col-12">
-            <livewire:users.show-roles />
+            <livewire:users.roles.show-roles />
         </div>
     </div>
 

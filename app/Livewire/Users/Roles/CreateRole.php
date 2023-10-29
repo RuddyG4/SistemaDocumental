@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Users;
+namespace App\Livewire\Users\Roles;
 
 use App\Models\Users\Role;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +13,7 @@ class CreateRole extends Component
     
     public function render()
     {
-        return view('livewire.users.create-role');
+        return view('livewire.users.roles.create-role');
     }
 
     public function createRole()
