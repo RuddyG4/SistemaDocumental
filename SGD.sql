@@ -45,6 +45,8 @@ CREATE TABLE folders (
 	updated_at TIMESTAMP
 );
 
+
+
 CREATE TABLE categories (
 	id SERIAL PRIMARY KEY,
 	category_name VARCHAR(60) NOT NULL,
@@ -52,7 +54,7 @@ CREATE TABLE categories (
 	tenan_id INT NOT NULL REFERENCES customers (id)
 );
 
-CREATE TABLE files (
+/* CREATE TABLE files (
 	id SERIAL PRIMARY KEY,
 	file_name VARCHAR(60) NOT NULL,
 	file_path VARCHAR(255) NOT NULL,
@@ -61,9 +63,20 @@ CREATE TABLE files (
 	tenan_id INT NOT NULL REFERENCES customers (id),
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP
+); */
+
+CREATE TABLE files (
+  id SERIAL PRIMARY KEY,
+  file_name VARCHAR(60) NOT NULL,
+  file_path VARCHAR(255) NOT NULL,
+  folder_id INT,
+  category_id INT,
+  tenan_id INT NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP
 );
 
-CREATE TABLE version_history (
+/* CREATE TABLE version_history (
 	id SERIAL PRIMARY KEY,
 	version_date date NOT NULL,
 	Path VARCHAR(255) NOT NULL,
@@ -71,6 +84,19 @@ CREATE TABLE version_history (
 	name_user VARCHAR(60) NOT NULL,
 	file_id INT REFERENCES files (id),
 	tenan_id INT NOT NULL REFERENCES customers (id)
+); */
+CREATE TABLE version_history (
+  id SERIAL PRIMARY KEY,
+  version_date DATE NOT NULL,
+  path VARCHAR(255) NOT NULL,
+  user_id INT NOT NULL,
+  name_user VARCHAR(60) NOT NULL,
+  file_id INT,
+  tenan_id INT NOT NULL,
+  version_anterior_id INT DEFAULT NULL,
+  version INT DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE subscription (
@@ -80,7 +106,7 @@ CREATE TABLE subscription (
 	duration INT NOT NULL
 );
 
-CREATE TABLE custommers_subscription (
+CREATE TABLE custom																mers_subscription (
 	id SERIAL PRIMARY KEY,
 	subscription_date date NOT NULL,
 	subscription_id INT REFERENCES subscription (id),
@@ -91,7 +117,7 @@ CREATE TABLE custommers_subscription (
 -- Data population
 
 -- customers
-insert into customers(name, email, password, company_name) values 
+insert into customers(name, email, password, company_name) values
 ('Gonzalo', 'ruddygonzqh@gmail.com', '$2y$10$HdN5uqitH0qRbYppWR3eaeY8BBff3akK9e92U1FbYY.FV0vQHgVUa', 'Clinica Montalvo');
 
 -- roles
