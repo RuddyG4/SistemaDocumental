@@ -1,5 +1,5 @@
 <li>
-    <button type="button"  data-bs-toggle="modal" data-bs-target="#moveToFolder" class="dropdown-item">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#moveToFolder" class="dropdown-item">
         <i class="fa-solid fa-pen-to-square"></i>
         &nbsp;Mover
     </button>
@@ -12,12 +12,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="mb-0">
-                        <span>{{ Auth::user()->customer->company_name }}/</span>
+                        <span class="cursor-pointer" wire:click="openFolder()">{{ Auth::user()->customer->company_name }}/</span>
                         @foreach($currentPath as $key => $path)
                         @if ($loop->last)
-                        <span>{{ $path }}</span>
+                        <span class="cursor-pointer" wire:click="openFolder({{ $key }})">{{ $path }}</span>
                         @else
-                        <span>{{ $path }}/</span>
+                        <span class="cursor-pointer" wire:click="openFolder({{ $key }})">{{ $path }}/</span>
                         @endif
                         @endforeach
                     </h6>
@@ -62,7 +62,7 @@
     </div>
     @endteleport
     @endonce
-    
+
 </li>
 
 @pushOnce('scripts')
