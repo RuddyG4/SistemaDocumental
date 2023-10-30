@@ -19,8 +19,8 @@ class CreateRole extends Component
     public function createRole()
     {
         $validated = $this->validate([
-            'role_name' => 'required',
-            'description' => 'required',
+            'role_name' => 'required|max:60',
+            'description' => 'required|max:255',
         ]);
 
         $validated['tenan_id'] = Auth::user()->customer->id;

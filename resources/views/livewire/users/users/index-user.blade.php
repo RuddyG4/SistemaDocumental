@@ -52,6 +52,7 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    @if($users->hasPages())
                     <tfoot>
                         <tr>
                             <td>
@@ -59,6 +60,7 @@
                             </td>
                         </tr>
                     </tfoot>
+                    @endif
                 </table>
             </div>
         </div>

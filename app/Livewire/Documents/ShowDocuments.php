@@ -11,10 +11,10 @@ use Livewire\Component;
 
 class ShowDocuments extends Component
 {
-    public $folders;
-    public $files;
+    public $folders, $files;
     public $currentFolderID = null;
     public $currentPath = [];
+    public $folder_name, $description, $edit_folder_id;
 
 
 
@@ -32,6 +32,7 @@ class ShowDocuments extends Component
      * @return void
      */
     #[On('folder-created')]
+    #[On('folder-updated')]
     public function loadFolders()
     {
         $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
@@ -88,8 +89,34 @@ class ShowDocuments extends Component
         //
     }
 
+    public function editFolder(Folder $folder)
+    {
+        $this->edit_folder_id = $folder->id;
+        $this->folder_name = $folder->folder_name;
+        $this->description = $folder->description;
+    }
+
+    public function updateFolder()
+    {
+        $data = $this->validate([
+            'folder_name' => 'required|max:60',
+            'description' => 'required|max:255',
+        ]);
+        
+        $folder = Folder::find($this->edit_folder_id);
+        $folder->update($data);
+
+        $this->dispatch('folder-updated');
+        $this->reset('edit_folder_id', 'folder_name', 'description');
+    }
+
     public function downloadFile(File $file)
     {
         return Storage::download($file->file_path);
+    }
+
+    public function cancel()
+    {
+        $this->reset('edit_folder_id', 'folder_name', 'description');
     }
 }

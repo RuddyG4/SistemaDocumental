@@ -45,13 +45,12 @@ class ShowRoles extends Component
     public function updateRole()
     {
         $data = $this->validate([
-            'role_name' => 'required',
-            // 'description' => 'required',
+            'role_name' => 'required|max:60',
+            'description' => 'required|max:255',
         ]);
         $this->current_role->update($data);
 
         $this->dispatch('role-updated');
-
         $this->reset('current_role', 'role_name', 'description');
     }
 }

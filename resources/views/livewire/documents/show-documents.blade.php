@@ -62,7 +62,7 @@
                                 <i class="fa fa-ellipsis-v text-xs"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuFolderButton{{ $folder->id }}">
-                                <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
+                                <li><button type="button" wire:click="editFolder( {{ $folder->id }} )" data-bs-toggle="modal" data-bs-target="#editFolderModal" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
                                 <li><button type="button" wire:click="downloadFolder( {{ $folder->id }} )" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                             </ul>
                         </td>
@@ -115,4 +115,59 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div wire:ignore.self class="modal fade" id="editFolderModal" tabindex="-1" role="dialog" aria-labelledby="editFolder" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFolder">Edit folder</h5>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close" wire:click="cancel">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-start">
+                    <form wire:submit="updateFolder" id="edit-folder-form">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <input type="text" wire:model="folder_name" class="form-control" id="folder_name" placeholder="Folder name">
+                                </div>
+
+                                @error('folder_name')
+                                <span class="error" style="color:red">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <input type="text" wire:model="description" class="form-control" id="folder_description" placeholder="Folder description">
+                                </div>
+                                @error('description')
+                                <span class="error" style="color:red">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
+                    <button type="submit" form="edit-folder-form" class="btn bg-gradient-primary">Update folder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@push('scripts')
+<script>
+    const editFolderModal = new bootstrap.Modal(document.getElementById('editFolderModal'));
+    document.addEventListener('livewire:initialized', () => {
+       @this.on('folder-updated', (event) => {
+           editFolderModal.hide();
+       });
+    });
+</script>
+@endpush

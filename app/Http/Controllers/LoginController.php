@@ -61,6 +61,7 @@ class LoginController extends Controller
 
         $role = Role::create([
             'role_name' => 'Administrator',
+            'description' => 'Administrador con control total del sistema.',
             'tenan_id' => $customer->id
         ]);
 

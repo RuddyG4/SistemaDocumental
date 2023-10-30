@@ -56,6 +56,17 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <div class="text-info">
+                                        Nota: la contraseña por defecto es "password"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

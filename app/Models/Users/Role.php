@@ -16,6 +16,7 @@ class Role extends Model
 
     protected $fillable = [
         'role_name',
+        'description',
         'tenan_id',
     ];
     

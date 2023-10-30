@@ -11,6 +11,7 @@ CREATE TABLE customers (
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     role_name VARCHAR(60) NOT NULL,
+	description VARCHAR(255) NOT NULL,
 	tenan_id INT NOT NULL REFERENCES customers (id)
 );
 
@@ -125,9 +126,9 @@ insert into customers(name, email, password, company_name, created_at, updated_a
 ('Gonzalo', 'ruddygonzqh@gmail.com', '$2y$10$HdN5uqitH0qRbYppWR3eaeY8BBff3akK9e92U1FbYY.FV0vQHgVUa', 'Clinica Montalvo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- roles
-insert into roles (role_name, tenan_id) values
-('Administrator', 1),
-('Medico', 1);
+insert into roles (role_name, description, tenan_id) values
+('Administrator', 'Adminstrador con control total del sistema.', 1),
+('Medico', 'Médico de la clínica', 1);
 
 -- permissions
 insert into permissions (name, description, tenan_id) values
@@ -143,7 +144,7 @@ insert into users (role_id, username, email, password, tenan_id, created_at, upd
 -- folders
 
 -- First level folders
-insert into folders (user_id, folder_name, description, tenan_id, created_at) values
-(1, 'Imagenes', 'imagenes de la compañia', 1, CURRENT_TIMESTAMP),
-(1, 'Historias clinicas', 'Historias clinicas de los pacientes', 1, CURRENT_TIMESTAMP),
-(1, 'Personal', 'Documentos del personal de recursos humanos', 1, CURRENT_TIMESTAMP);
+insert into folders (user_id, folder_name, description, tenan_id, created_at, updated_at) values
+(1, 'Imagenes', 'imagenes de la compañia', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 'Historias clinicas', 'Historias clinicas de los pacientes', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+(1, 'Personal', 'Documentos del personal de recursos humanos', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

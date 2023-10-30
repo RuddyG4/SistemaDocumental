@@ -54,6 +54,6 @@ class IndexUser extends Component
 
     public function getRoles()
     {
-        return Role::all();
+        return Role::where('tenan_id', auth()->user()->tenan_id)->get();
     }
 }
