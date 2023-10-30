@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::get('/documents', [FolderController::class, 'index']);
+    Route::get('/documents', [FolderController::class, 'index'])->name('documents.index');
 
     Route::get('/roles', [RolePermissionController::class, 'index']);
 
@@ -49,6 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/update-version-doc', [FolderController::class, 'actualizarVerionDelDocumento'])->name('update.version_doc');
 
     Route::get('/search-document', [FolderController::class, 'indexSearchDocument'])->name('search.document_index');
+
+    Route::post('/search-document-by', [FolderController::class, 'searchDocumentBy'])->name('search.document_search_by');
+
+    Route::get('/show-history-versions/{id}', [FolderController::class, 'showHistoryVersion'])->name('documents.show_history_versions');
+
+    Route::delete('/delete-document/{id}', [FolderController::class, 'deleteDocument'])->name('documents.delete_document');
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');

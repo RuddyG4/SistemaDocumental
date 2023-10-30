@@ -3,28 +3,33 @@
 namespace App\Livewire\Documents;
 
 use App\Models\Documents\File;
+use Livewire\Attributes\Reactive;
+use Livewire\Component;
+use Livewire\Attributes\On;
 use App\Models\Documents\Folder;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Livewire\Attributes\On;
-use Livewire\Component;
 
-class ShowDocuments extends Component
+class MoveFolder extends Component
 {
     public $folders;
-    public $files;
-    public $currentFolderID = null;
     public $currentPath = [];
-
-
+    public $currentFolderID = null;
+    public $fileID;
 
     public function mount()
     {
         $this->loadView();
     }
+
     public function render()
     {
-        return view('livewire.documents.show-documents');
+
+        return view('livewire.documents.move-folder');
+    }
+
+    public function cancelar()
+    {
+        $this->dispatch('close-modal');
     }
     /**
      * Load the folders associated with the current user's tenant and parent folder.
@@ -37,13 +42,6 @@ class ShowDocuments extends Component
         $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
         // dd($this->folders);
     }
-
-    #[On('file-uploaded')]
-    public function loadFiles()
-    {
-        $this->files = File::where('tenan_id', Auth::user()->tenan_id)->where('folder_id', $this->currentFolderID)->get();
-    }
-
     public function openFolder(Folder $folder = null)
     {
         $this->currentFolderID = $folder->id;
@@ -71,7 +69,6 @@ class ShowDocuments extends Component
         }
         $this->currentPath[$folder->id] = $folder->folder_name;
     }
-
     /**
      * Updates the view by loading folders and files.
      *
@@ -80,16 +77,12 @@ class ShowDocuments extends Component
     public function loadView()
     {
         $this->loadFolders();
-        $this->loadFiles();
     }
-
-    public function downloadFolder(Folder $folder)
+    public function saveHere()
     {
-        //
-    }
-
-    public function downloadFile(File $file)
-    {
-        return Storage::download($file->file_path);
+        File::find($this->fileID)->update([
+            'folder_id' => $this->currentFolderID
+        ]);
+        return redirect()->route('documents.index');
     }
 }

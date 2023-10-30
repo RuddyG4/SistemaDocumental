@@ -46,9 +46,8 @@
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     <h3 class="font-weight-bolder text-info text-gradient">Welcome Register</h3>
-                                    <p class="mb-0">Enter your name, email and password to register</p>
+                                    <p class="mb-0">Enter your company, name, email and password to register</p>
                                 </div>
-
                                 @error('failedAuth')
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <span class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
@@ -61,8 +60,15 @@
 
                                 <div class="card-body">
                                     <form role="form" method="POST" action="{{ route('auth.register') }}">
-                                        @csrf
 
+                                        @csrf
+                                        <label>Empresa</label>
+                                        <div class="mb-3">
+                                            <input type="empresa" name="empresa" class="form-control" placeholder="empresa" aria-label="empresa" aria-describedby="empresa-addon">
+                                        </div>
+                                        @error('empresa')
+                                        <span class="error" style="color:red">{{ $message }}</span>
+                                        @enderror @csrf
                                         <label>Nombre</label>
                                         <div class="mb-3">
                                             <input type="nombre" name="nombre" class="form-control" placeholder="nombre" aria-label="nombre" aria-describedby="nombre-addon">

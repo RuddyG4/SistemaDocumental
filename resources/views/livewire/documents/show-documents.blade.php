@@ -21,6 +21,7 @@
             </div>
         </div>
     </div>
+
     <div class="card-body px-0 pt-0 pb-2">
         <div class="table-responsive p-0">
             <table class="table align-items-center mb-0">
@@ -30,7 +31,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Owner</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last modified</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
-                        <th class="text-secondary opacity-7"></th>
+                        <th class="text-secondary opacity-7">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,10 +96,17 @@
                                 <i class="fa fa-ellipsis-v text-xs"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuFileButton{{ $file->id }}">
+                                <!-- TODO: hacer que de el boton de esta lista  -->
                                 <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
+                                <livewire:documents.move-folder :fileID="$file->id" :key="$file->id" />
                                 <li><button type="button" wire:click="downloadFile({{ $file->id }})" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                                 <li><a type="button" href="{{route('view.document',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-eye"></i> &nbsp;Ver</a></li>
-                                <!-- <li><a type="button" href="{{route('view.document_d',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-eye"></i> &nbsp;Ver</a></li> -->
+                                <li><a type="button" href="{{route('documents.show_history_versions',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-code-merge"></i> &nbsp;History Versions</a></li>
+                                <form action="{{route('documents.delete_document',$file->id)}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <li><button type="submit" class="dropdown-item"><i class="fa-solid fa-trash-can"></i>&nbsp;Eliminar</button></li>
+                                </form>
                             </ul>
                         </td>
                     </tr>

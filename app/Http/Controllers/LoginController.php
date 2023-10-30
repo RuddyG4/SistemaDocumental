@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Users\Customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -45,15 +46,26 @@ class LoginController extends Controller
     public function register(Request $request){
         $credentials = $request->validate([
             'nombre'   => ['required'],
+            'empresa'   => ['required'],
             'email'    => ['required', 'email'],
             'password' => ['required']
         ]);
+        Customers::create([
+            'name' => $credentials['empresa'],
+            'tenan_id' => 1
+        ]);
+        $customer = new Customers;
+        $customer->company_name = $credentials['empresa'];
+        $customer->nombre = $credentials['nombre'];
+        $customer->email = $credentials['email'];
+        $customer->password = bcrypt($credentials['password']);
+        $customer->save();
         User::create([
             'role_id' => 1,
             'username' => $credentials['nombre'],
             'email' => $credentials['email'],
             'password' => bcrypt($credentials['password']),
-            'tenan_id' => 1
+            'tenan_id' => $customer->id
         ]);
         return redirect()->to('/login')->with('success', 'ok');
     }
