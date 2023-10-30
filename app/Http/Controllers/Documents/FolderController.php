@@ -133,7 +133,48 @@ class FolderController extends Controller
         $file = Storage::disk('public')->get($rutaDocumento);
         return response($file, 200, ['Content-Type' => 'application/pdf']);
     }
+    public function showHistoryVersion($id){
+        $file = File::find($id);
+        $pila_archivos = new Collection();
+        $lista_archivos = new Collection();
+        $pila_archivos->push($file);
+        $lista_archivos->push($file);
+
+        //! tener cuidado con el ciclo infinito
+        while (count($pila_archivos)!=0) {
+            $aux = $pila_archivos->pop();
+            $version_anterior = $aux->version_history->version_anterior;
+            if (isset($version_anterior)) {
+                $file_aux = File::find($version_anterior->file_id);
+                $pila_archivos->push($file_aux);
+                $lista_archivos->push($file_aux);
+            }
+        }
+        return view('livewire.documents.files.show-file-history-versions', compact('id','lista_archivos'));
+    }
+    public function deleteDocument($id){
+        $file = File::find($id);
+        $file->delete();
+        return redirect()->route('documents.index');
+    }
     public function indexSearchDocument(){
-        dd("llegando con exito");
+        $resultados = [];
+        return view('livewire.documents.files.search-file',compact('resultados'));
+    }
+    public function searchDocumentBy(Request $request){
+        $request->validate([
+            'tipo_busqueda' => ['required'],
+            'texto_a_buscar' => ['required'],
+        ]);
+        $search = $request->texto_a_buscar;
+
+        if ($request->tipo_busqueda == 0) {
+            $resultados = File::where('file_name','like','%'.$search.'%')
+                                ->where('folder_id','!=',-1)
+                                ->get();
+        }else{
+            $resultados = [];
+        }
+        return view('livewire.documents.files.search-file',compact('resultados'));
     }
 }

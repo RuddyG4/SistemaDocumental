@@ -1,6 +1,6 @@
 <li>
     <button type="button" data-bs-toggle="modal" data-bs-target="#moveToFolder" class="dropdown-item">
-        <i class="fa-solid fa-pen-to-square"></i>
+        <i class="fa-solid fa-folder-tree"></i>
         &nbsp;Mover
     </button>
 
@@ -55,7 +55,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancelar">Cancel</button>
-                    <button type="submit" form="create-folder-form" class="btn bg-gradient-primary">Move here</button>
+                    <button type="submit" form="create-folder-form" class="btn bg-gradient-primary" wire:click="saveHere">Move here</button>
                 </div>
             </div>
         </div>

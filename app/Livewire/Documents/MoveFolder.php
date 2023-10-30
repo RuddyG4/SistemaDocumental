@@ -2,17 +2,19 @@
 
 namespace App\Livewire\Documents;
 
+use App\Models\Documents\File;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\Documents\Folder;
 use Illuminate\Support\Facades\Auth;
+
 class MoveFolder extends Component
 {
     public $folders;
     public $currentPath = [];
     public $currentFolderID = null;
-     public $fileID;
+    public $fileID;
 
     public function mount()
     {
@@ -75,5 +77,12 @@ class MoveFolder extends Component
     public function loadView()
     {
         $this->loadFolders();
+    }
+    public function saveHere()
+    {
+        File::find($this->fileID)->update([
+            'folder_id' => $this->currentFolderID
+        ]);
+        return redirect()->route('documents.index');
     }
 }
