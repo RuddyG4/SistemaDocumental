@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Users\Customers;
+use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -58,8 +59,13 @@ class LoginController extends Controller
             'password' => bcrypt($credentials['password']),
         ]);
 
+        $role = Role::create([
+            'role_name' => 'Administrator',
+            'tenan_id' => $customer->id
+        ]);
+
         User::create([
-            'role_id' => 1,
+            'role_id' => $role->id,
             'username' => $credentials['nombre'],
             'email' => $credentials['email'],
             'password' => bcrypt($credentials['password']),

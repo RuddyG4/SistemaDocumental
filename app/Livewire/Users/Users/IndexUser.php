@@ -22,7 +22,7 @@ class IndexUser extends Component
     #[On('user-created')]
     public function loadUsers()
     {
-        return User::with('role')->paginate(10);
+        return User::where('tenan_id', auth()->user()->tenan_id)->with('role')->paginate(10);
     }
 
     public function showUser(User $user)

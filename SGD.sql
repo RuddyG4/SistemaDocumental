@@ -10,7 +10,7 @@ CREATE TABLE customers (
 
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
-    role_name VARCHAR(60) NOT NULL UNIQUE,
+    role_name VARCHAR(60) NOT NULL,
 	tenan_id INT NOT NULL REFERENCES customers (id)
 );
 

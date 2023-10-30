@@ -31,7 +31,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Owner</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last modified</th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
-                        <th class="text-secondary opacity-7">Actions</th>
+                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
