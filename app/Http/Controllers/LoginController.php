@@ -43,23 +43,21 @@ class LoginController extends Controller
     {
         return view('register');
     }
+
     public function register(Request $request){
         $credentials = $request->validate([
-            'nombre'   => ['required'],
-            'empresa'   => ['required'],
-            'email'    => ['required', 'email'],
-            'password' => ['required']
+            'nombre'   => ['required', 'max:60'],
+            'empresa'   => ['required', 'max:60'],
+            'email'    => ['required', 'email', 'max:60', 'unique:users', 'unique:customers'],
+            'password' => ['required', 'max:60']
         ]);
-        Customers::create([
+        $customer = Customers::create([
             'name' => $credentials['empresa'],
-            'tenan_id' => 1
+            'email' => $credentials['email'],
+            'company_name' => $credentials['empresa'],
+            'password' => bcrypt($credentials['password']),
         ]);
-        $customer = new Customers;
-        $customer->company_name = $credentials['empresa'];
-        $customer->nombre = $credentials['nombre'];
-        $customer->email = $credentials['email'];
-        $customer->password = bcrypt($credentials['password']);
-        $customer->save();
+
         User::create([
             'role_id' => 1,
             'username' => $credentials['nombre'],
@@ -67,7 +65,8 @@ class LoginController extends Controller
             'password' => bcrypt($credentials['password']),
             'tenan_id' => $customer->id
         ]);
-        return redirect()->to('/login')->with('success', 'ok');
+
+        return redirect()->to('/login')->with('success', 'New customer registered successfully');
     }
     public function resetPasswordView(){
         return view('reset-password');

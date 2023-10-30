@@ -60,15 +60,16 @@
 
                                 <div class="card-body">
                                     <form role="form" method="POST" action="{{ route('auth.register') }}">
-
                                         @csrf
+
                                         <label>Empresa</label>
                                         <div class="mb-3">
                                             <input type="empresa" name="empresa" class="form-control" placeholder="empresa" aria-label="empresa" aria-describedby="empresa-addon">
                                         </div>
                                         @error('empresa')
                                         <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror @csrf
+                                        @enderror
+
                                         <label>Nombre</label>
                                         <div class="mb-3">
                                             <input type="nombre" name="nombre" class="form-control" placeholder="nombre" aria-label="nombre" aria-describedby="nombre-addon">
@@ -76,6 +77,7 @@
                                         @error('nombre')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
+
                                         <label>Email</label>
                                         <div class="mb-3">
                                             <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
@@ -91,6 +93,7 @@
                                         @error('password')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
+                                        
                                         <div class="text-center">
                                             <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Register</button>
                                         </div>

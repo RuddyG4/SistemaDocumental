@@ -3,7 +3,9 @@ CREATE TABLE customers (
     name VARCHAR(60) NOT NULL,
     email VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
-    company_name VARCHAR(60) NOT NULL
+    company_name VARCHAR(60) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP
 );
 
 CREATE TABLE roles (
@@ -31,6 +33,8 @@ CREATE TABLE users (
     username VARCHAR(60) NOT NULL,
     email VARCHAR(60) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	updated_at TIMESTAMP,
     tenan_id INT NOT NULL REFERENCES customers (id)
 );
 
@@ -106,7 +110,7 @@ CREATE TABLE subscription (
 	duration INT NOT NULL
 );
 
-CREATE TABLE custom																mers_subscription (
+CREATE TABLE custommers_subscription (
 	id SERIAL PRIMARY KEY,
 	subscription_date date NOT NULL,
 	subscription_id INT REFERENCES subscription (id),
@@ -117,8 +121,8 @@ CREATE TABLE custom																mers_subscription (
 -- Data population
 
 -- customers
-insert into customers(name, email, password, company_name) values
-('Gonzalo', 'ruddygonzqh@gmail.com', '$2y$10$HdN5uqitH0qRbYppWR3eaeY8BBff3akK9e92U1FbYY.FV0vQHgVUa', 'Clinica Montalvo');
+insert into customers(name, email, password, company_name, created_at, updated_at) values
+('Gonzalo', 'ruddygonzqh@gmail.com', '$2y$10$HdN5uqitH0qRbYppWR3eaeY8BBff3akK9e92U1FbYY.FV0vQHgVUa', 'Clinica Montalvo', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- roles
 insert into roles (role_name, tenan_id) values
@@ -133,8 +137,8 @@ insert into permission_role (role_id, permission_id) values
 (1, 1);
 
 -- Users
-insert into users (role_id, username, email, password, tenan_id) values
-(1, 'gonzalo', 'ruddygonzqh@gmail.com', '$2y$10$HdN5uqitH0qRbYppWR3eaeY8BBff3akK9e92U1FbYY.FV0vQHgVUa', 1);
+insert into users (role_id, username, email, password, tenan_id, created_at, updated_at) values
+(1, 'gonzalo', 'ruddygonzqh@gmail.com', '$2y$10$HdN5uqitH0qRbYppWR3eaeY8BBff3akK9e92U1FbYY.FV0vQHgVUa', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- folders
 
