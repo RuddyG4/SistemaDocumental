@@ -34,8 +34,8 @@
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.3') }}" rel="stylesheet" />
-    <!-- swit alert 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- swit alert 2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="sweetalert2.min.css">
 </head>
 
@@ -48,10 +48,9 @@
                         <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left bg-transparent">
-                                    <h3 class="font-weight-bolder text-info text-gradient">Reset account password</h3>
-                                    <p class="mb-0">Enter a new for you email</p>
+                                    <h3 class="font-weight-bolder text-info text-gradient">Welcome</h3>
+                                    <!-- <p class="mb-0">Enter your company, name, email and password to register</p> -->
                                 </div>
-
                                 @error('failedAuth')
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <span class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
@@ -61,11 +60,12 @@
                                     </button>
                                 </div>
                                 @enderror
-
                                 <div class="card-body">
-                                    <form role="form" method="POST" action="{{ route('login.submit') }}">
+                                   Por favor coloque su correo, se le enviará un email para que pueda resetear su contraseña
+                                </div>
+                                <div class="card-foter">
+                                <form role="form" method="POST" action="{{ route('password.email') }}">
                                         @csrf
-
                                         <label>Email</label>
                                         <div class="mb-3">
                                             <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
@@ -73,43 +73,22 @@
                                         @error('email')
                                         <span class="error" style="color:red">{{ $message }}</span>
                                         @enderror
-
-                                        <label>Password</label>
-                                        <div class="mb-3">
-                                            <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
-                                        </div>
-                                        @error('password')
-                                        <span class="error" style="color:red">{{ $message }}</span>
-                                        @enderror
-
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
-                                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                                        </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                                            <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Enviar Correo</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                    <p class="mb-4 text-sm mx-auto">
-                                        Don't have an account?
-                                        <a href="{{route('auth.register_view')}}" class="text-info text-gradient font-weight-bold">Sign up</a>
-                                    </p>
-                                    <p class="mb-4 text-sm mx-auto">
-                                        <a href="{{route('password.reset')}}" class="text-info text-gradient font-weight-bold"> Forgot Password?</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @if (session('message'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                <span class="alert-text"><strong>Se le volvió a enviar correo de verificación </strong></span>
+            </div>
+            @endif
         </section>
     </main>
     <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
@@ -177,37 +156,32 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.3') }}"></script>
-    <script src="sweetalert2.all.min.js"></script>
-    @if (session('success') == 'ok')
-    <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Registro Exitoso, se le envio un correo de verificacion',
-            showConfirmButton: false,
-            timer: 1500
-        })
-    </script>
-    @endif
     @if (session('success') == 'si')
     <script>
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Su password se cambió correctamente',
+            title: 'Se le envió un correo de restablecimiento de contraseña',
+            showConfirmButton: false,
+            timer: 3000
+        })
+    </script>
+    @endif
+    @if (session('success') == 'no')
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Correo no registrado',
             showConfirmButton: false,
             timer: 1500
         })
     </script>
     @endif
-    <script>
-
-    </script>
-
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.3') }}"></script>
 </body>
 
 </html>

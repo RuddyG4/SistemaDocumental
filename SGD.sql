@@ -33,6 +33,7 @@ CREATE TABLE users (
     role_id INT NOT NULL REFERENCES roles (id),
     username VARCHAR(60) NOT NULL,
     email VARCHAR(60) NOT NULL UNIQUE,
+    email_verified_at TIMESTAMP,
     password VARCHAR(60) NOT NULL,
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP,
