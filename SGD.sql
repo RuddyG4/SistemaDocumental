@@ -50,11 +50,13 @@ CREATE TABLE folders (
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP
 );
+
 CREATE TABLE password_reset_tokens (
     email VARCHAR(255) PRIMARY KEY,
     token VARCHAR(255) NOT NULL,
 	created_at TIMESTAMP NOT NULL
 );
+
 CREATE TABLE categories (
 	id SERIAL PRIMARY KEY,
 	category_name VARCHAR(60) NOT NULL,
@@ -121,6 +123,18 @@ CREATE TABLE custommers_subscription (
 	custommers_id INT REFERENCES customers (id)
 );
 
+CREATE TABLE personal_access_tokens (
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    tokenable_type VARCHAR(255) NOT NULL,
+    tokenable_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    token VARCHAR(64) NOT NULL UNIQUE,
+    abilities TEXT,
+    last_used_at TIMESTAMPTZ,
+    expires_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL
+);
 
 -- Data population
 

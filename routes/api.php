@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', 'App\Http\Controllers\Api\UserController@login')->middleware('guest');
+
+
+Route::middleware(['auth:sanctum','verified'])->group(function () {
+    Route::post('/logout', 'App\Http\Controllers\Api\UserController@logout')->name('logout');
+    Route::get('/prueba', function () {
+        return response()->json('prueba');
+    });
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
