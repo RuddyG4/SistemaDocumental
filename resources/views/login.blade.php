@@ -189,7 +189,7 @@
             icon: 'success',
             title: 'Registro Exitoso, se le envio un correo de verificacion',
             showConfirmButton: false,
-            timer: 1500
+            timer: 3000
         })
     </script>
     @endif
@@ -200,7 +200,7 @@
             icon: 'success',
             title: 'Su password se cambió correctamente',
             showConfirmButton: false,
-            timer: 1500
+            timer: 3000
         })
     </script>
     @endif
