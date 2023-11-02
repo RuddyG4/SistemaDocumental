@@ -4,7 +4,10 @@ use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Users\RolePermissionController;
 use App\Livewire\Users\Users\IndexUser;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,18 +23,33 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/dashboard');
 });
-
-
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
     Route::get('/register-view', [LoginController::class, 'registerView'])->name('auth.register_view');
     Route::post('/register', [LoginController::class, 'register'])->name('auth.register');
-    Route::get('/reset-password-view', [LoginController::class, 'resetPasswordView'])->name('auth.reset_password_view');
+    Route::get('/forgot-password', function () {
+        $token = request()->query('token');
+        if (isset($token)) {
+            return view('reset-password', ['token' => $token]);
+        }else{
+            return view('send-email-pass-reset');
+        }
+    })->name('password.reset');
+    Route::post('/forgot-password', function (Request $request) {
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+                    ? back()->with('success','si')
+                    : back()->withErrors('success','no');
+    })->name('password.email');
     Route::post('/reset-password', [LoginController::class, 'resetPassword'])->name('auth.reset_password');
 });
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
@@ -58,3 +76,17 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');
+Route::get('/auth/verify-email', function () {
+    return view('verify-email');
+})->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('success', 'ok');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+

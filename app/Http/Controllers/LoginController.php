@@ -9,7 +9,7 @@ use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Auth\Events\Registered;
 // use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -65,21 +65,22 @@ class LoginController extends Controller
             'tenan_id' => $customer->id
         ]);
 
-        User::create([
+       $user = User::create([
             'role_id' => $role->id,
             'username' => $credentials['nombre'],
             'email' => $credentials['email'],
             'password' => bcrypt($credentials['password']),
             'tenan_id' => $customer->id
         ]);
-
-        return redirect()->to('/login')->with('success', 'New customer registered successfully');
+        event(new Registered($user));
+        return redirect()->to('/login')->with('success', 'ok');
     }
     public function resetPasswordView(){
         return view('reset-password');
     }
     public function resetPassword(Request $request){
         $credentials = $request->validate([
+            'token' => 'required',
             'email'    => ['required', 'email'],
             'password' => ['required'],
             'confirm_password' => ['required']

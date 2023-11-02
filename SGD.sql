@@ -33,6 +33,7 @@ CREATE TABLE users (
     role_id INT NOT NULL REFERENCES roles (id),
     username VARCHAR(60) NOT NULL,
     email VARCHAR(60) NOT NULL UNIQUE,
+    email_verified_at TIMESTAMP,
     password VARCHAR(60) NOT NULL,
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP,
@@ -49,9 +50,11 @@ CREATE TABLE folders (
 	created_at TIMESTAMP NOT NULL,
 	updated_at TIMESTAMP
 );
-
-
-
+CREATE TABLE password_reset_tokens (
+    email VARCHAR(255) PRIMARY KEY,
+    token VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP NOT NULL
+);
 CREATE TABLE categories (
 	id SERIAL PRIMARY KEY,
 	category_name VARCHAR(60) NOT NULL,

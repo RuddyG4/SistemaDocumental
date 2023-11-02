@@ -62,6 +62,8 @@
                                 <div class="card-body">
                                     <form role="form" method="POST" action="{{ route('auth.reset_password') }}">
                                         @csrf
+
+                                        <input type="hidden" name="token" value="{{$token}}">
                                         <label>Email</label>
                                         <div class="mb-3">
                                             <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
