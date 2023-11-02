@@ -48,7 +48,7 @@
                         <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left bg-transparent">
-                                    <h3 class="font-weight-bolder text-info text-gradient">Welcome</h3>
+                                    <h3 class="font-weight-bolder text-info text-gradient">Recuparación de contraseña</h3>
                                     <!-- <p class="mb-0">Enter your company, name, email and password to register</p> -->
                                 </div>
                                 @error('failedAuth')
@@ -61,7 +61,7 @@
                                 </div>
                                 @enderror
                                 <div class="card-body">
-                                   Por favor coloque su correo, se le enviará un email para que pueda resetear su contraseña
+                                    Ingrese su correo para enviarle un correo con un enlace de recuperación de contraseña
                                 </div>
                                 <div class="card-foter">
                                 <form role="form" method="POST" action="{{ route('password.email') }}">

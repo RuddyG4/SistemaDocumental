@@ -48,8 +48,8 @@
                         <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
                             <div class="card card-plain mt-8">
                                 <div class="card-header pb-0 text-left bg-transparent">
-                                    <h3 class="font-weight-bolder text-info text-gradient">Reset account password</h3>
-                                    <p class="mb-0">Enter a new for you email</p>
+                                    <h3 class="font-weight-bolder text-info text-gradient">Iniciar sesion</h3>
+                                    <p class="mb-0">Ingrese su correo y contraseña</p>
                                 </div>
 
                                 @error('failedAuth')
