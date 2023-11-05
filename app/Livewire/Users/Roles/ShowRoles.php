@@ -58,13 +58,11 @@ class ShowRoles extends Component
     public function loadPermissions(Role $role)
     {
         $this->current_role = $role;
-        if ($this->role_permissions == null) {
-            $this->permissions = Permission::all();
-        }
+        $this->permissions = Permission::all();
         foreach ($this->permissions as $p) {
             $this->role_permissions[$p->id] = false;
         }
-        
+
         foreach ($role->permissions as $p) {
             $this->role_permissions[$p->id] = true;
         }
