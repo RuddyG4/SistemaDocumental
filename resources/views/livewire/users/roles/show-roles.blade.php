@@ -36,7 +36,7 @@
                             </div>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#showRolePermissions">
+                            <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#showRolePermissions" wire:click="loadPermissions({{ $role->id }})">
                                 <i class="fa-solid fa-eye"></i> &nbsp; View
                             </button>
                         </td>
@@ -135,7 +135,7 @@
     <div wire:ignore.self class="modal fade" id="showRolePermissions" tabindex="-1" role="dialog" aria-labelledby="rolePermissions" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                @if(true)
+                @if($role_permissions)
                 <div class="modal-header">
                     <h5 class="modal-title" id="rolePermissions">permissions</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close" wire:click="cancel">
@@ -143,34 +143,23 @@
                     </button>
                 </div>
                 <div class="modal-body text-start">
-                    <form wire:submit="updatePermissions" id="show-role-form">
+                    <form wire:submit="updatePermissions" id="role-permissions-form">
+                        @foreach($permissions as $p)
                         <div class="row">
                             <div class="col">
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Permissions</label>
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked="">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">{{ $p->name }}</label>
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked="" wire:model.live="role_permissions.{{ $p->id }}">
                                 </div>
-                                @error('role_name')
-                                <span class="error" style="color:red">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <input type="text" wire:model="description" class="form-control" id="permission_description" placeholder="Role description">
-                                </div>
-                                @error('description')
-                                <span class="error" style="color:red">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
+                        @endforeach
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
-                    <button type="submit" form="show-role-form" class="btn bg-gradient-primary">
-                        Update role
+                    <button type="submit" form="role-permissions-form" class="btn bg-gradient-primary">
+                        Save changes
                     </button>
                 </div>
                 @endif
@@ -186,6 +175,20 @@
     document.addEventListener('livewire:initialized', () => {
         @this.on('role-updated', (event) => {
             showRoleModal.hide();
+        });
+    });
+    
+    const createPermissionModal = new bootstrap.Modal(document.getElementById('createPermission'));
+    document.addEventListener('livewire:initialized', () => {
+        @this.on('permission-created', (event) => {
+            createPermissionModal.hide();
+        });
+    });
+    
+    const showRolePermissionsModal = new bootstrap.Modal(document.getElementById('showRolePermissions'));
+    document.addEventListener('livewire:initialized', () => {
+        @this.on('role-permissions-updated', (event) => {
+            showRolePermissionsModal.hide();
         });
     });
 </script>
