@@ -102,6 +102,7 @@
                                 <li><button type="button" wire:click="downloadFile({{ $file->id }})" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                                 <li><a type="button" href="{{route('view.document',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-eye"></i> &nbsp;Ver</a></li>
                                 <li><a type="button" href="{{route('documents.show_history_versions',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-code-merge"></i> &nbsp;History Versions</a></li>
+                                <li><a type="button" href="{{route('documents.add_revisors',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-users"></i> &nbsp;Add Revisores</a></li>
                                 <form action="{{route('documents.delete_document',$file->id)}}" method="POST">
                                     @csrf
                                     @method('delete')

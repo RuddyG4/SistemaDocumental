@@ -69,18 +69,23 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="col-xl-3 col-sm-6">
             <div class="card">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Users</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Pendientes de revision</p>
+                                @if($cantidad_pendientes_revision>0)
                                 <h5 class="font-weight-bolder mb-0">
-                                    5
-                                    <!-- <span class="text-success text-sm font-weight-bolder">+2%</span> -->
+                                    <a href="{{route('documents.index_files_revision')}}">{{$cantidad_pendientes_revision}}</a>
                                 </h5>
+                                @else
+                                <h5 class="font-weight-bolder mb-0">
+                                    {{$cantidad_pendientes_revision}}
+                                </h5>
+                                @endif
                             </div>
                         </div>
                         <div class="col-4 text-end">

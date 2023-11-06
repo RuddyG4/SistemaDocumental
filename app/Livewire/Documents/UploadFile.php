@@ -35,6 +35,7 @@ class UploadFile extends Component
         $file->file_path = $path;
         $file->folder_id = $this->currentFolderID;
         $file->tenan_id = auth()->user()->tenan_id;
+        $file->estado_file_id = 1;
         $file->save();
         VersionHistory::create([
             'version_date' => now(),
@@ -48,7 +49,6 @@ class UploadFile extends Component
         $this->dispatch('file-uploaded');
         $this->dispatch('close-upload-file-modal');
     }
-
     public function cancel()
     {
     }
