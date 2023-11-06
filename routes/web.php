@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users\RolePermissionController;
 use App\Livewire\Users\Users\IndexUser;
+use App\Models\RevisorFile;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 /*
@@ -32,7 +35,7 @@ Route::middleware('guest')->group(function () {
         $token = request()->query('token');
         if (isset($token)) {
             return view('reset-password', ['token' => $token]);
-        }else{
+        } else {
             return view('send-email-pass-reset');
         }
     })->name('password.reset');
@@ -44,14 +47,20 @@ Route::middleware('guest')->group(function () {
         );
 
         return $status === Password::RESET_LINK_SENT
-                    ? back()->with('success','si')
-                    : back()->withErrors('success','no');
+            ? back()->with('success', 'si')
+            : back()->withErrors('success', 'no');
     })->name('password.email');
     Route::post('/reset-password', [LoginController::class, 'resetPassword'])->name('auth.reset_password');
 });
-Route::middleware(['auth','verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $user = Auth::user();
+        // $revisors_files = $user->revisor_file;
+        $revisors_files = RevisorFile::where('user_id', $user->id)
+                                     ->where('estado_file_id', 2)
+                                     ->get();
+        $cantidad_pendientes_revision = count($revisors_files);
+        return view('dashboard', compact('cantidad_pendientes_revision'));
     });
 
     Route::get('/users', IndexUser::class)->name('users.index');
@@ -73,6 +82,20 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/show-history-versions/{id}', [FolderController::class, 'showHistoryVersion'])->name('documents.show_history_versions');
 
     Route::delete('/delete-document/{id}', [FolderController::class, 'deleteDocument'])->name('documents.delete_document');
+
+    Route::get('/add-revisors/{id}', [FolderController::class, 'showAdddRevisorView'])->name('documents.add_revisors');
+
+    Route::get('/get-users/{id}', [UserController::class, 'getUserById'])->name('users.get_user_by_id');
+
+    Route::post('/guardar-revisores-file', [FolderController::class, 'storeRevisores'])->name('documents.store_revisores');
+
+    Route::get('/revision-files', [FolderController::class, 'filesARevisar'])->name('documents.index_files_revision');
+
+    Route::get('/show-file-revision/{id}', [FolderController::class, 'showFilesARevisar'])->name('documents.show_files_revision');
+
+    Route::post('/evaluar-file', [FolderController::class, 'evaluarFile'])->name('documents.evaluar_file');
+
+    Route::get('/a-revision/{id}', [FolderController::class, 'mandaArevision'])->name('documents.mandar_revision');
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');
@@ -89,4 +112,3 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('success', 'ok');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
