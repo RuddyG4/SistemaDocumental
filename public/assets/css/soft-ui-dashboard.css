@@ -21637,8 +21637,14 @@ hr.horizontal.gray-light {
 }
 
 /* Modified */
+.icon.icon-shape.bg-gradient-info {
+  background-image: linear-gradient(310deg, #17c1e8 0%, #17c1e8 100%);
+}
+
+/* Modified */
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon {
   /* background-image: linear-gradient(310deg, #cb0c9f 0%, #cb0c9f 100%); */
+  /* background-image: linear-gradient(310deg, #2152ff 0%, #21d4fd 100%); */
   background-image: linear-gradient(310deg, #17c1e8 0%, #17c1e8 100%);
 }
 
