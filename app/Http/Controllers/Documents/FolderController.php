@@ -127,6 +127,7 @@ class FolderController extends Controller
                 $revisor_file->file_id = $file_nuevo->id;
                 $revisor_file->save();
                 $file_nuevo->estado_file_id = 2;
+                $file_nuevo->save();
             }
             VersionHistory::create([
                 'version_date' => now(),
@@ -214,6 +215,7 @@ class FolderController extends Controller
             $revisor_file = new RevisorFile();
             $revisor_file->user_id = $revisor['id'];
             $revisor_file->file_id = $document_id;
+            $revisor_file->estado_file_id = 2;
             $revisor_file->save();
         }
         $file = File::find($document_id);
