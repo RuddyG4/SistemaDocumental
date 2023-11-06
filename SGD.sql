@@ -82,6 +82,7 @@ CREATE TABLE files (
   folder_id INT,
   category_id INT,
   tenan_id INT NOT NULL,
+  estado_file_id BIGINT NOT NULL DEFAULT 1,
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP
 );
@@ -134,6 +135,27 @@ CREATE TABLE personal_access_tokens (
     expires_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL,
     updated_at TIMESTAMPTZ NOT NULL
+);
+CREATE TABLE estados_files (
+  id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP DEFAULT NULL,
+  updated_at TIMESTAMP DEFAULT NULL
+);
+
+INSERT INTO estados_files (id, nombre, created_at, updated_at) VALUES
+(1, 'Redacción', '2023-11-05 13:49:45', '2023-11-05 13:49:45'),
+(2, 'Revisión', '2023-11-05 13:49:45', '2023-11-05 13:49:45'),
+(3, 'Aprobado', '2023-11-05 13:51:56', '2023-11-05 13:51:56');
+
+CREATE TABLE revisors_files (
+  id bigserial PRIMARY KEY,
+  file_id bigint NOT NULL,
+  user_id bigint NOT NULL,
+  estado_file_id bigint,
+  comentario varchar(255),
+  created_at timestamp NOT NULL,
+  updated_at timestamp NOT NULL
 );
 
 -- Data population
