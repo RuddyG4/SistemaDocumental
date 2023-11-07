@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 60)->unique();
-            $table->string('description', 60);
-            $table->unsignedInteger('tenan_id');
-            $table->foreign('tenan_id')->references('id')->on('customers');
-            $table->timestamps();
+            $table->string('name', 60);
+            $table->string('simple_name', 60);
+            $table->string('description', 255);
         });
     }
 

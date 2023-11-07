@@ -1,18 +1,12 @@
 <div class="card mb-4">
     <div class="card-header pb-0">
         <div class="row">
-            <div class="col-xl-7 col-sm-6 d-flex align-items-center">
+            <div class="col-xl-10 col-sm-9 d-flex align-items-center">
                 <h6 class="mb-0">
                     Roles and permissions
                 </h6>
             </div>
             <livewire:users.roles.create-role />
-            <div class="col-xl-3 col-sm-3 text-end">
-                <button type="button" class="btn btn-info btn-sm mb-0" data-bs-toggle="modal" data-bs-target="#createPermission">
-                    <span class="btn-inner--icon"><i class="fa fa-plus"></i></span>
-                    <span class="btn-inner--text">&nbsp; New permission</span>
-                </button>
-            </div>
         </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
@@ -48,47 +42,6 @@
     </div>
 
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="createPermission" tabindex="-1" role="dialog" aria-labelledby="createNewPermission" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createNewPermission">Create new permission</h5>
-                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close" wire:click="cancel">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-start">
-                    <form wire:submit="createPermission" id="create-permission-form">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <input type="text" wire:model="permission_name" class="form-control" id="permission_name" placeholder="Permission name">
-                                </div>
-                                @error('permission_name')
-                                <span class="error" style="color:red">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <input type="text" wire:model="description" class="form-control" id="permission_description" placeholder="Permission description">
-                                </div>
-                                @error('description')
-                                <span class="error" style="color:red">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
-                    <button type="submit" form="create-permission-form" class="btn bg-gradient-primary">Create permission</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div wire:ignore.self class="modal fade" id="showRoleModal" tabindex="-1" role="dialog" aria-labelledby="showRole" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -148,7 +101,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">{{ $p->name }}</label>
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">{{ $p->simple_name }}</label>
                                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked="" wire:model.live="role_permissions.{{ $p->id }}">
                                 </div>
                             </div>
@@ -157,10 +110,14 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
+                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">
+                        {{ $current_role->role_name == 'Administrador' ? 'Close' : 'Cancel' }}
+                    </button>
+                    @if ($current_role->role_name != 'Administrador')
                     <button type="submit" form="role-permissions-form" class="btn bg-gradient-primary">
                         Save changes
                     </button>
+                    @endif
                 </div>
                 @endif
             </div>
@@ -175,13 +132,6 @@
     document.addEventListener('livewire:initialized', () => {
         @this.on('role-updated', (event) => {
             showRoleModal.hide();
-        });
-    });
-    
-    const createPermissionModal = new bootstrap.Modal(document.getElementById('createPermission'));
-    document.addEventListener('livewire:initialized', () => {
-        @this.on('permission-created', (event) => {
-            createPermissionModal.hide();
         });
     });
     

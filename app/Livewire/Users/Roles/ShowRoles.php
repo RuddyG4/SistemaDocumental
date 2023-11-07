@@ -11,7 +11,7 @@ use Livewire\Component;
 class ShowRoles extends Component
 {
     public $current_role;
-    public $role_name, $permission_name, $description;
+    public $role_name, $description;
     public $roles, $permissions, $role_permissions;
 
     public function render()
@@ -66,22 +66,6 @@ class ShowRoles extends Component
         foreach ($role->permissions as $p) {
             $this->role_permissions[$p->id] = true;
         }
-    }
-
-    public function createPermission()
-    {
-        $data = $this->validate([
-            'permission_name' => 'required|max:60',
-            'description' => 'required|max:255',
-        ]);
-
-        $data['tenan_id'] = Auth::user()->customer->id;
-        $data['name'] = $data['permission_name'];
-        unset($data['permission_name']);
-        Permission::create($data);
-
-        $this->dispatch('permission-created');
-        $this->reset('permission_name', 'description');
     }
 
     public function updatePermissions()
