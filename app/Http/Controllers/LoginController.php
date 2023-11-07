@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Users\Customers;
+use App\Models\Users\Customer;
 use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +52,7 @@ class LoginController extends Controller
             'email'    => ['required', 'email', 'max:60', 'unique:users', 'unique:customers'],
             'password' => ['required', 'max:60']
         ]);
-        $customer = Customers::create([
+        $customer = Customer::create([
             'name' => $credentials['empresa'],
             'email' => $credentials['email'],
             'company_name' => $credentials['empresa'],
