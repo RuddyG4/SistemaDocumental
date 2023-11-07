@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Models\Users\Customers;
+use App\Models\Users\Customer;
 use App\Models\Users\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Customers::class, 'tenan_id');
+        return $this->belongsTo(Customer::class, 'tenan_id');
     }
 
     public function role(): BelongsTo

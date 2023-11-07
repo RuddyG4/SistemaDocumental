@@ -24,19 +24,16 @@ class UploadFile extends Component
     public function uploadFile()
     {
         $path = $this->file->store('documents');
-       /*  File::create([
+        $file = File::create([
             'file_name' => $this->file->getClientOriginalName(),
             'file_path' => $path,
+            'file_ext' => $this->file->getClientOriginalExtension(),
+            'file_size' => $this->file->getSize(),
             'folder_id' => $this->currentFolderID,
-            'tenan_id' => auth()->user()->customer->id
-        ]); */
-        $file = new File();
-        $file->file_name = $this->file->getClientOriginalName();
-        $file->file_path = $path;
-        $file->folder_id = $this->currentFolderID;
-        $file->tenan_id = auth()->user()->tenan_id;
-        $file->estado_file_id = 1;
-        $file->save();
+            'tenan_id' => auth()->user()->customer->id,
+            'user_id' => auth()->user()->id,
+            'estado_file_id' => 1
+        ]);
         VersionHistory::create([
             'version_date' => now(),
             'path' => $path,

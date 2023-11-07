@@ -19,6 +19,9 @@ class File extends Model
         'file_name',
         'file_path',
         'folder_id',
+        'user_id',
+        'file_ext',
+        'file_size',
         'category_id',
         'tenan_id',
         'estado_file_id'

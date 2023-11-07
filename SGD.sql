@@ -60,7 +60,7 @@ CREATE TABLE password_reset_tokens (
 CREATE TABLE categories (
 	id SERIAL PRIMARY KEY,
 	category_name VARCHAR(60) NOT NULL,
-	description VARCHAR(60) NOT NULL,
+	description VARCHAR(255) NOT NULL,
 	tenan_id INT NOT NULL REFERENCES customers (id)
 );
 
@@ -82,6 +82,7 @@ CREATE TABLE files (
   folder_id INT,
   category_id INT,
   tenan_id INT NOT NULL,
+  user_id INT NOT NULL REFERENCES users (id),
   estado_file_id BIGINT NOT NULL DEFAULT 1,
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP
@@ -110,17 +111,17 @@ CREATE TABLE version_history (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE subscription (
+CREATE TABLE subscriptions (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(60) NOT NULL,
 	price decimal(12,2) NOT NULL,
 	duration INT NOT NULL
 );
 
-CREATE TABLE custommers_subscription (
+CREATE TABLE custommer_subscription (
 	id SERIAL PRIMARY KEY,
 	subscription_date date NOT NULL,
-	subscription_id INT REFERENCES subscription (id),
+	subscription_id INT NOT NULL REFERENCES subscription (id),
 	custommers_id INT REFERENCES customers (id)
 );
 
@@ -143,11 +144,6 @@ CREATE TABLE estados_files (
   created_at TIMESTAMP DEFAULT NULL,
   updated_at TIMESTAMP DEFAULT NULL
 );
-
-INSERT INTO estados_files (id, nombre, created_at, updated_at) VALUES
-(1, 'Redacción', '2023-11-05 13:49:45', '2023-11-05 13:49:45'),
-(2, 'Revisión', '2023-11-05 13:49:45', '2023-11-05 13:49:45'),
-(3, 'Aprobado', '2023-11-05 13:51:56', '2023-11-05 13:51:56');
 
 CREATE TABLE revisors_files (
   id bigserial PRIMARY KEY,
@@ -188,3 +184,8 @@ insert into folders (user_id, folder_name, description, tenan_id, created_at, up
 (1, 'Imagenes', 'imagenes de la compañia', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 'Historias clinicas', 'Historias clinicas de los pacientes', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 (1, 'Personal', 'Documentos del personal de recursos humanos', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO estados_files (id, nombre, created_at, updated_at) VALUES
+(1, 'Redacción', '2023-11-05 13:49:45', '2023-11-05 13:49:45'),
+(2, 'Revisión', '2023-11-05 13:49:45', '2023-11-05 13:49:45'),
+(3, 'Aprobado', '2023-11-05 13:51:56', '2023-11-05 13:51:56');

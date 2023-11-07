@@ -72,7 +72,7 @@
                     @foreach($files as $file)
                     <tr wire:key="{{ $file->id }}">
                         <td>
-                            <div class="d-flex px-2 py-1 cursor-pointer">
+                            <a href="{{route('view.document',$file->id)}}" class="d-flex px-2 py-1 cursor-pointer">
                                 <div>
                                     <i class="fa-solid fa-file me-3"></i>
                                 </div>
@@ -80,16 +80,16 @@
                                     <h6 class="mb-0 text-sm">{{ $file->file_name }}</h6>
                                     <p class="text-xs text-secondary mb-0">{{ $file->description}}</p>
                                 </div>
-                            </div>
+                            </a>
                         </td>
                         <td>
-                            <p class="text-xs font-weight-bold mb-0">{{-- file->user->username --}}Propietario</p>
+                            <p class="text-xs font-weight-bold mb-0">{{ $file->user->username }}</p>
                         </td>
                         <td class="align-middle text-center text-sm">
                             <span class="text-secondary text-xs font-weight-bold">{{ $file->updated_at }}</span>
                         </td>
                         <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold"> --- </span>
+                            <span class="text-secondary text-xs font-weight-bold"> {{ $file->file_size / 1000 }} KB </span>
                         </td>
                         <td class="align-middle dropstart">
                             <button type="button" class="btn btn-link text-secondary mb-0" aria-haspopup="true" id="dropdownMenuFileButton{{ $file->id }}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -97,10 +97,9 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuFileButton{{ $file->id }}">
                                 <!-- TODO: hacer que de el boton de esta lista  -->
-                                <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
+                                <!-- <li><button type="button" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li> -->
                                 <livewire:documents.move-folder :fileID="$file->id" :key="$file->id" />
                                 <li><button type="button" wire:click="downloadFile({{ $file->id }})" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
-                                <li><a type="button" href="{{route('view.document',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-eye"></i> &nbsp;Ver</a></li>
                                 <li><a type="button" href="{{route('documents.show_history_versions',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-code-merge"></i> &nbsp;History Versions</a></li>
                                 <li><a type="button" href="{{route('documents.add_revisors',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-users"></i> &nbsp;Add Revisores</a></li>
                                 <form action="{{route('documents.delete_document',$file->id)}}" method="POST">
@@ -166,9 +165,9 @@
 <script>
     const editFolderModal = new bootstrap.Modal(document.getElementById('editFolderModal'));
     document.addEventListener('livewire:initialized', () => {
-       @this.on('folder-updated', (event) => {
-           editFolderModal.hide();
-       });
+        @this.on('folder-updated', (event) => {
+            editFolderModal.hide();
+        });
     });
 </script>
 @endpush

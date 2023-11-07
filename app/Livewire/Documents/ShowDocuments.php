@@ -112,7 +112,7 @@ class ShowDocuments extends Component
 
     public function downloadFile(File $file)
     {
-        return Storage::download($file->file_path);
+        return Storage::download($file->file_path, $file->file_name);
     }
 
     public function cancel()

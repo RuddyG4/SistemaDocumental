@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Users\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -17,13 +17,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $roles = Role::all();
+        $roles_ids = $roles->pluck('id')->toArray();
+        foreach ($roles as $role) {
+            $customers_ids[$role->id] = $role->tenan_id;
+        }
         return [
             'username' => fake()->firstName(),
-            // 'username' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'role_id' => 2,
+            'role_id' => $role_id = fake()->randomElement($roles_ids),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'tenan_id' => 1
+            'tenan_id' => $customers_ids[$role_id],
+            'email_verified_at' => now(),
         ];
     }
 
