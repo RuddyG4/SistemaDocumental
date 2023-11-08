@@ -120,9 +120,12 @@ class FolderController extends Controller
             $file_nuevo->folder_id = $file_antiguo->folder_id;
             $file_nuevo->tenan_id = auth()->user()->tenan_id;
             $file_nuevo->estado_file_id = 1;
+            $file_nuevo->file_ext = $this->file->getClientOriginalExtension();
+            $file_nuevo->file_size = $this->file->getSize();
+            $file_nuevo->user_id = auth()->user()->id;
             $file_nuevo->save();
-            $file_antiguo->folder_id = -1;
-            $file_antiguo->save();
+            // $file_antiguo->folder_id = 8888;
+            // $file_antiguo->save();
             foreach ($revisor_files as $key => $revisor_file) {
                 $revisor_file->file_id = $file_nuevo->id;
                 $revisor_file->save();

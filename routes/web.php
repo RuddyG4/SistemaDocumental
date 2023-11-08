@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/documents', [FolderController::class, 'index'])->name('documents.index');
     Route::get('/roles', [RolePermissionController::class, 'index']);
-    Route::get('/view-document/{id}', [FolderController::class, 'show'])->name('view.document');
+    Route::get('/documents/view-document/{id}', [FolderController::class, 'show'])->name('view.document');
     Route::post('/update-version-doc', [FolderController::class, 'actualizarVerionDelDocumento'])->name('update.version_doc');
     Route::get('/search-document', [FolderController::class, 'indexSearchDocument'])->name('search.document_index');
     Route::post('/search-document-by', [FolderController::class, 'searchDocumentBy'])->name('search.document_search_by');
