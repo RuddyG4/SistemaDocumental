@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('file_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('estado_file_id');
-            $table->string('comentario');
+            $table->string('comentario')->nullable();
             $table->timestamps();
         });
     }

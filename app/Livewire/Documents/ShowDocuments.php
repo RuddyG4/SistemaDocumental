@@ -102,7 +102,7 @@ class ShowDocuments extends Component
             'folder_name' => 'required|max:60',
             'description' => 'required|max:255',
         ]);
-        
+
         $folder = Folder::find($this->edit_folder_id);
         $folder->update($data);
 
