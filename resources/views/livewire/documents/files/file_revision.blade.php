@@ -19,13 +19,13 @@
                         <span>Estado:</span>
                         @switch($file->estado_file_id)
                         @case(1)
-                        <span class="badge bg-info">{{$file->estado_file->nombre}}</span>
+                        <span class="badge bg-info">{{$file->estado_file->name}}</span>
                         @break
                         @case(2)
-                        <span class="badge bg-warning">{{$file->estado_file->nombre}}</span>
+                        <span class="badge bg-warning">{{$file->estado_file->name}}</span>
                         @break
                         @default
-                        <span class="badge bg-success">{{$file->estado_file->nombre}}</span>
+                        <span class="badge bg-success">{{$file->estado_file->name}}</span>
                         @endswitch
                         <form action="{{route('documents.evaluar_file')}}" method="POST">
                             @csrf
