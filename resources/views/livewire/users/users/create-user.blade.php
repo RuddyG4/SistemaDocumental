@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label>Password</label>
                                     <div class="text-info">
-                                        Nota: la contraseña por defecto es "password"
+                                        <small>Nota: la contraseña por defecto es "password"</small>
                                     </div>
                                 </div>
                             </div>

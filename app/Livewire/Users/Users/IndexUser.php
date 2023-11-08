@@ -12,11 +12,16 @@ class IndexUser extends Component
 {
     use WithPagination;
     
-    public $username, $email, $role_id, $user_id;
+    public $username, $email, $role_id, $user, $roles;
     
     public function render()
     {
         return view('livewire.users.users.index-user');
+    }
+
+    public function mount()
+    {
+        $this->roles = $this->getRoles();
     }
 
     #[On('user-created')]
@@ -27,7 +32,7 @@ class IndexUser extends Component
 
     public function showUser(User $user)
     {
-        $this->user_id = $user->id;
+        $this->user = $user;
         $this->username = $user->username;
         $this->email = $user->email;
         $this->role_id = $user->role_id;
@@ -41,8 +46,7 @@ class IndexUser extends Component
             'role_id' => 'required',
         ]);
 
-        $user = User::find($this->user_id);
-        $user->update($data);
+        $this->user->update($data);
 
         $this->dispatch('user-updated');
     }

@@ -27,7 +27,7 @@
                         @foreach($users = $this->loadUsers() as $user)
                         <tr wire:key="{{ $user->id }}">
                             <td>
-                                <div class="d-flex px-2 py-1 cursor-pointer" data-bs-toggle="modal" data-bs-target="#showUser" wire:click="showUser({{ $user->id }})">
+                                <div class="d-flex px-2 py-1 cursor-pointer row-title" data-bs-toggle="modal" data-bs-target="#showUser" wire:click="showUser({{ $user->id }})">
                                     <div class="d-flex flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm">{{ $user->username }}</h6>
                                     </div>
@@ -107,7 +107,7 @@
                                     <label for="role_id">Role</label>
                                     <select class="form-control" wire:model="role_id" id="role_id">
                                         <option value="">-- select a role --</option>
-                                        @foreach ($this->getRoles() as $role)
+                                        @foreach ($this->roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                         @endforeach
                                     </select>

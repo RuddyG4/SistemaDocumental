@@ -6,7 +6,7 @@
                     <span class="cursor-pointer" wire:click="openFolder()">{{ Auth::user()->customer->company_name }}/</span>
                     @foreach($currentPath as $key => $path)
                     @if ($loop->last)
-                    <span class="cursor-pointer" wire:click="openFolder({{ $key }})">{{ $path }}</span>
+                    <span class="cursor-pointer" wire:click="openFolder({{ $key }})"><u>{{ $path }}</u></span>
                     @else
                     <span class="cursor-pointer" wire:click="openFolder({{ $key }})">{{ $path }}/</span>
                     @endif
@@ -38,7 +38,7 @@
                     @foreach($folders as $folder)
                     <tr wire:key="{{ $folder->id }}">
                         <td>
-                            <div class="d-flex px-2 py-1 cursor-pointer" wire:click="openFolder({{ $folder->id }})">
+                            <div class="d-flex px-2 py-1 cursor-pointer row-title" wire:click="openFolder({{ $folder->id }})">
                                 <div>
                                     <i class="fa-regular fa-folder me-3"></i>
                                 </div>
@@ -72,9 +72,39 @@
                     @foreach($files as $file)
                     <tr wire:key="{{ $file->id }}">
                         <td>
-                            <a href="{{route('view.document',$file->id)}}" class="d-flex px-2 py-1 cursor-pointer">
+                            <a href="{{route('view.document',$file->id)}}" class="d-flex px-2 py-1 cursor-pointer row-title">
                                 <div>
-                                    <i class="fa-solid fa-file me-3"></i>
+                                    @switch($file->file_ext)
+                                    @case('pdf')
+                                    <i class="fa-solid fa-file-pdf"></i> &nbsp;
+                                    @break
+                                    @case('doc')
+                                    <i class="fa-solid fa-file-word me-3"></i> &nbsp;
+                                    @break
+                                    @case('docx')
+                                    <i class="fa-solid fa-file-word"></i> &nbsp;
+                                    @break
+                                    @case('png')
+                                    <i class="fa-solid fa-file-image"></i> &nbsp;
+                                    @break
+                                    @case('jpg')
+                                    <i class="fa-solid fa-file-image"></i> &nbsp;
+                                    @break
+                                    @case('xlsx')
+                                    <i class="fa-solid fa-file-excel"></i> &nbsp;
+                                    @break
+                                    @case('xlsm')
+                                    <i class="fa-solid fa-file-excel"></i> &nbsp;
+                                    @break
+                                    @case('mp4')
+                                    <i class="fa-solid fa-file-video"></i> &nbsp;
+                                    @break
+                                    @case('mp3')
+                                    <i class="fa-solid fa-file-audio"></i> &nbsp;
+                                    @break
+                                    @default
+                                    <i class="fa-solid fa-file me-3"></i> &nbsp;
+                                    @endswitch
                                 </div>
                                 <div class="d-flex flex-column justify-content-center">
                                     <h6 class="mb-0 text-sm">{{ $file->file_name }}</h6>

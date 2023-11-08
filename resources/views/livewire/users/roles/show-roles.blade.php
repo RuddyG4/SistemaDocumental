@@ -22,7 +22,7 @@
                     @foreach($roles as $role)
                     <tr wire:key="{{ $role->id }}">
                         <td>
-                            <div data-bs-toggle="modal" data-bs-target="#showRoleModal" class="d-flex px-2 py-1 cursor-pointer" wire:click="showRole({{ $role->id }})">
+                            <div data-bs-toggle="modal" data-bs-target="#showRoleModal" class="d-flex px-2 py-1 cursor-pointer row-title" wire:click="showRole({{ $role->id }})">
                                 <div class="d-flex flex-column justify-content-center">
                                     <h6 class="mb-0 text-sm">{{ $role->role_name }}</h6>
                                     <p class="text-xs text-secondary mb-0">{{ $role->description }}</p>
