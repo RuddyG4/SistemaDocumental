@@ -109,7 +109,7 @@
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Documents Management</h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  {{ Request::is('documents') ? 'active' : '' }}" href="{{ url('/documents') }}">
+                    <a class="nav-link  {{ Request::is('documents*') ? 'active' : '' }}" href="{{ url('/documents') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-regular fa-folder-open color-foreground"></i>
                         </div>
