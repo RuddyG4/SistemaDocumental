@@ -1,5 +1,5 @@
 <li>
-    <button type="button" data-bs-toggle="modal" data-bs-target="#moveToFolder" class="dropdown-item">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#moveToFolder" wire:click="loadView" class="dropdown-item">
         <i class="fa-solid fa-folder-tree"></i>
         &nbsp;Mover
     </button>
@@ -10,6 +10,7 @@
     <div wire:ignore.self class="modal fade" id="moveToFolder" tabindex="-1" role="dialog" aria-labelledby="createNewFolder" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+                @if(isset($folders))
                 <div class="modal-header">
                     <h6 class="mb-0">
                         <span class="cursor-pointer" wire:click="openFolder()">{{ Auth::user()->customer->company_name }}/</span>
@@ -57,6 +58,7 @@
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancelar">Cancel</button>
                     <button type="submit" form="create-folder-form" class="btn bg-gradient-primary" wire:click="saveHere">Move here</button>
                 </div>
+                @endif
             </div>
         </div>
     </div>

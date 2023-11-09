@@ -27,7 +27,7 @@ class CreateFolder extends Component
 
         $validated['user_id'] = auth()->user()->id;
         $validated['parent_id'] = $this->currentFolderID;
-        $validated['tenan_id'] = auth()->user()->customer->id;
+        $validated['tenan_id'] = auth()->user()->tenan_id;
 
         Folder::create($validated);
         $this->dispatch('folder-created');

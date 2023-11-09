@@ -3,9 +3,7 @@
 namespace App\Livewire\Documents;
 
 use App\Models\Documents\File;
-use Livewire\Attributes\Reactive;
 use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Models\Documents\Folder;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,11 +13,6 @@ class MoveFolder extends Component
     public $currentPath = [];
     public $currentFolderID = null;
     public $fileID;
-
-    public function mount()
-    {
-        $this->loadView();
-    }
 
     public function render()
     {
@@ -36,10 +29,9 @@ class MoveFolder extends Component
      *
      * @return void
      */
-    #[On('folder-created')]
     public function loadFolders()
     {
-        $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
+        $this->folders = Folder::where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
         // dd($this->folders);
     }
     public function openFolder(Folder $folder = null)

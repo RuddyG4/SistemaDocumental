@@ -6,7 +6,7 @@
                     <span class="cursor-pointer" wire:click="openFolder()">{{ Auth::user()->customer->company_name }}/</span>
                     @foreach($currentPath as $key => $path)
                     @if ($loop->last)
-                    <span class="cursor-pointer" wire:click="openFolder({{ $key }})"><u>{{ $path }}</u></span>
+                    <span class="cursor-pointer" wire:click="openFolder({{ $key }})"><b><u>{{ $path }}</u></b></span>
                     @else
                     <span class="cursor-pointer" wire:click="openFolder({{ $key }})">{{ $path }}/</span>
                     @endif

@@ -4,7 +4,6 @@ namespace App\Livewire\Documents;
 
 use App\Models\Documents\File;
 use App\Models\Documents\Folder;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -35,14 +34,13 @@ class ShowDocuments extends Component
     #[On('folder-updated')]
     public function loadFolders()
     {
-        $this->folders = Folder::with('user')->where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
-        // dd($this->folders);
+        $this->folders = Folder::with('user:id,username')->where('tenan_id', auth()->user()->tenan_id)->where('parent_id', $this->currentFolderID)->get();
     }
 
     #[On('file-uploaded')]
     public function loadFiles()
     {
-        $this->files = File::where('tenan_id', Auth::user()->tenan_id)->where('folder_id', $this->currentFolderID)->get();
+        $this->files = File::with('user:id,username')->where('tenan_id', auth()->user()->tenan_id)->where('folder_id', $this->currentFolderID)->get();
     }
 
     public function openFolder(Folder $folder = null)
