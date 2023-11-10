@@ -67,7 +67,9 @@
                                 <i class="fa fa-ellipsis-v text-xs"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuFolderButton{{ $folder->id }}">
+                                @if (in_array('documents.modify', $permissions))
                                 <li><button type="button" wire:click="editFolder( {{ $folder->id }} )" data-bs-toggle="modal" data-bs-target="#editFolderModal" class="dropdown-item"><i class="fa-solid fa-pen-to-square"></i> &nbsp;Editar</button></li>
+                                @endif
                                 <li><button type="button" wire:click="downloadFolder( {{ $folder->id }} )" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                             </ul>
                         </td>
@@ -137,11 +139,13 @@
                                 <li><button type="button" wire:click="downloadFile({{ $file->id }})" class="dropdown-item"><i class="fa-solid fa-download"></i> &nbsp;Descargar</button></li>
                                 <li><a type="button" href="{{route('documents.show_history_versions',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-code-merge"></i> &nbsp;History Versions</a></li>
                                 <li><a type="button" href="{{route('documents.add_revisors',$file->id)}}" class="dropdown-item"><i class="fa-solid fa-users"></i> &nbsp;Add Revisores</a></li>
+                                @if(in_array('documents.delete', $permissions))
                                 <form action="{{route('documents.delete_document',$file->id)}}" method="POST">
                                     @csrf
                                     @method('delete')
                                     <li><button type="submit" class="dropdown-item"><i class="fa-solid fa-trash-can"></i>&nbsp;Eliminar</button></li>
                                 </form>
+                                @endif
                             </ul>
                         </td>
                     </tr>

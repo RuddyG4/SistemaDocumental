@@ -102,6 +102,7 @@
                             <div class="col">
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="flexSwitchCheckDefault">{{ $p->simple_name }}</label>
+                                    <i class="fa-regular fa-circle-question" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $p->description }}"></i>
                                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked="" wire:model.live="role_permissions.{{ $p->id }}">
                                 </div>
                             </div>
