@@ -50,6 +50,11 @@ class PermissionSeeder extends Seeder
             'description' => 'Permite ver la informacion de los usuarios'
         ]);
         Permission::create([
+            'simple_name' => 'Crear usuarios',
+            'name' => 'users.create',
+            'description' => 'Permite registrar nuevos usuarios'
+        ]);
+        Permission::create([
             'simple_name' => 'Modificar usuarios',
             'name' => 'users.modify',
             'description' => 'Permite modificar la informacion de los usuarios'

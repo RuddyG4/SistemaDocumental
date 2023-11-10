@@ -199,7 +199,6 @@ class FolderController extends Controller
 
         if ($request->tipo_busqueda == 0) {
             $resultados = File::where('file_name', 'like', '%' . $search . '%')
-                ->where('folder_id', '!=', -1)
                 ->get();
         } else {
             $resultados = [];
