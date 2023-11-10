@@ -1,4 +1,4 @@
-<x-app>
+<x-app :$permissions>
     <div>
         <x-slot:title>
             Revison Files

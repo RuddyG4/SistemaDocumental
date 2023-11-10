@@ -76,7 +76,8 @@ class FolderController extends Controller
         foreach ($file->revisor_file as $key => $value) {
             # code...
         } */
-        return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento', 'file', 'extension', 'lista_archivos'));
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento', 'file', 'extension', 'lista_archivos', 'permissions'));
     }
 
     /**
@@ -147,13 +148,14 @@ class FolderController extends Controller
         }
         return redirect()->route('view.document', $file_nuevo->id);
     }
+
     public function preVisualizacion(string $id)
     {
         $file = File::find($id);
-        $rutaDocumento = $file->file_path;
-        $file = Storage::disk('public')->get($rutaDocumento);
+        $file = Storage::disk('public')->get($file->file_path);
         return response($file, 200, ['Content-Type' => 'application/pdf']);
     }
+
     public function showHistoryVersion($id)
     {
         $file = File::find($id);
@@ -172,7 +174,8 @@ class FolderController extends Controller
                 $lista_archivos->push($file_aux);
             }
         }
-        return view('livewire.documents.files.show-file-history-versions', compact('id', 'lista_archivos'));
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.show-file-history-versions', compact('id', 'lista_archivos', 'permissions'));
     }
     public function deleteDocument($id)
     {
@@ -206,8 +209,9 @@ class FolderController extends Controller
     }
     public function showAdddRevisorView($id)
     {
-        $users = User::all();
-        return view('livewire.documents.files.add-revisors', compact('id', 'users'));
+        $users = User::where('tenan_id', auth()->user()->tenan_id)->get();
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.add-revisors', compact('id', 'users', 'permissions'));
     }
     public function storeRevisores(Request $request)
     {
@@ -242,12 +246,13 @@ class FolderController extends Controller
                                      ->with('file')
                                      ->with('file.user')
                                      ->get();
-        return view('livewire.documents.files.list-revision-file', compact('revisors_files'));
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.list-revision-file', compact('revisors_files', 'permissions'));
     }
     public function showFilesARevisar($id){
         $file = File::find($id);
-        $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
-        return view('livewire.documents.files.file_revision', compact('file','extension'));
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.file_revision', compact('file', 'permissions'));
     }
     public function evaluarFile(Request $request){
         $user = auth()->user();

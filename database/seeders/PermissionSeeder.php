@@ -59,5 +59,11 @@ class PermissionSeeder extends Seeder
             'name' => 'users.delete',
             'description' => 'Permite eliminar los usuarios registrados'
         ]);
+        
+        Permission::create([
+            'simple_name' => 'Ver log del sistema',
+            'name' => 'system.log',
+            'description' => 'Permite ver el registro de actividad del sistema'
+        ]);
     }
 }

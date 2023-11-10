@@ -64,10 +64,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/update-version-doc', [FolderController::class, 'actualizarVerionDelDocumento'])->name('update.version_doc');
     Route::get('/search-document', [FolderController::class, 'indexSearchDocument'])->name('search.document_index');
     Route::post('/search-document-by', [FolderController::class, 'searchDocumentBy'])->name('search.document_search_by');
-    Route::get('/show-history-versions/{id}', [FolderController::class, 'showHistoryVersion'])->name('documents.show_history_versions');
+    Route::get('/documents/show-history-versions/{id}', [FolderController::class, 'showHistoryVersion'])->name('documents.show_history_versions');
     Route::delete('/delete-document/{id}', [FolderController::class, 'deleteDocument'])->name('documents.delete_document');
 
-    Route::get('/add-revisors/{id}', [FolderController::class, 'showAdddRevisorView'])->name('documents.add_revisors');
+    Route::get('/documents/add-revisors/{id}', [FolderController::class, 'showAdddRevisorView'])->name('documents.add_revisors');
 
     Route::get('/get-users/{id}', [UserController::class, 'getUserById'])->name('users.get_user_by_id');
 

@@ -3,7 +3,7 @@
         display: none;
     }
 </style>
-<x-app>
+<x-app :$permissions>
     <div>
         <x-slot:title>
             Add Revisors

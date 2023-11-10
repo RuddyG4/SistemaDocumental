@@ -1,4 +1,4 @@
-<x-app>
+<x-app :$permissions>
     <div>
         <x-slot:title>
             Documento Para Revisar
@@ -43,10 +43,10 @@
                         </form>
                     </div>
                     <div class="col-md-8">
-                        @if($extension == "pdf")
+                        @if($file->file_ext == "pdf")
                         <embed src="{{ route('view.document_d',$file->id) }}" type="application/pdf" width="100%" height="630">
                         @endif
-                        @if($extension != "pdf")
+                        @if($file->file_ext != "pdf")
                         <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ route('view.document_d',$id) }}" width="100%" height="630px" frameborder="0"> </iframe>
                         @endif
                     </div>
