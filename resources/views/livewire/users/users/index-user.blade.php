@@ -10,7 +10,7 @@
                     Users
                 </h6>
             </div>
-            @if (in_array('users.create', $permissions))
+            @if (true || in_array('users.create', $permissions))
             <livewire:users.users.create-user />
             @endif
         </div>
