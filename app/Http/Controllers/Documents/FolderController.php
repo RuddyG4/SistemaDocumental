@@ -23,7 +23,9 @@ class FolderController extends Controller
      */
     public function index()
     {
-        return view('documents.folders.index');
+        return view('documents.folders.index', [
+            'permissions' => auth()->user()->getPermissions(),
+        ]);
     }
 
     /**
@@ -181,7 +183,8 @@ class FolderController extends Controller
     public function indexSearchDocument()
     {
         $resultados = [];
-        return view('livewire.documents.files.search-file', compact('resultados'));
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.search-file', compact('resultados', 'permissions'));
     }
     public function searchDocumentBy(Request $request)
     {
@@ -198,7 +201,8 @@ class FolderController extends Controller
         } else {
             $resultados = [];
         }
-        return view('livewire.documents.files.search-file', compact('resultados'));
+        $permissions = auth()->user()->getPermissions();
+        return view('livewire.documents.files.search-file', compact('resultados', 'permissions'));
     }
     public function showAdddRevisorView($id)
     {

@@ -11,17 +11,19 @@ use Livewire\WithPagination;
 class IndexUser extends Component
 {
     use WithPagination;
-    
-    public $username, $email, $role_id, $user, $roles;
-    
+
+    public $username, $email, $role_id, $user, $roles, $permissions;
+
     public function render()
     {
-        return view('livewire.users.users.index-user');
+        return view('livewire.users.users.index-user')
+            ->layout('layouts.app', ['permissions' => $this->permissions]);
     }
 
     public function mount()
     {
         $this->roles = $this->getRoles();
+        $this->permissions = auth()->user()->getPermissions();
     }
 
     #[On('user-created')]
@@ -40,7 +42,7 @@ class IndexUser extends Component
 
     public function updateUser()
     {
-        $data =$this->validate([
+        $data = $this->validate([
             'username' => 'required',
             'email' => 'required|email',
             'role_id' => 'required',

@@ -77,6 +77,7 @@
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">{{ __('Users Management') }}</h6>
                 </li>
+                @if (in_array('users.list', $permissions))
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('users') ? 'active' : '' }}" href="{{ route('users.index') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -98,6 +99,7 @@
                         <span class="nav-link-text ms-1">{{ __('Users') }}</span>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('roles') ? 'active' : '' }}" href="{{url('/roles') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -109,6 +111,7 @@
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Documents Management</h6>
                 </li>
+                @if (in_array('documents.list', $permissions))
                 <li class="nav-item">
                     <a class="nav-link  {{ Request::is('documents*') ? 'active' : '' }}" href="{{ url('/documents') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -117,8 +120,9 @@
                         <span class="nav-link-text ms-1">{{ __('Documents') }}</span>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
-                    <a class="nav-link  " href="../pages/sign-in.html">
+                    <a class="nav-link  " >
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-tags color-foreground"></i>
                         </div>
@@ -126,7 +130,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="../pages/sign-up.html">
+                    <a class="nav-link  " >
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-trash color-foreground"></i>
                         </div>
@@ -134,7 +138,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " href="{{route('search.document_index')}}">
+                    <a class="nav-link  {{ Request::is('search-document*') ? 'active' : '' }}" href="{{route('search.document_index')}}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-search color-foreground"></i>
                         </div>

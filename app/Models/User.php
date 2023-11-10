@@ -63,4 +63,13 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(RevisorFile::class);
     }
+
+    /**
+     * Get permissions for the user
+     * @return array permissions
+     */
+    public function getPermissions()
+    {
+        return $this->role->permissions->pluck('name')->toArray();
+    }
 }

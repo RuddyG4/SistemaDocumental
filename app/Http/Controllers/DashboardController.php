@@ -25,7 +25,8 @@ class DashboardController extends Controller
             'users_count' => User::where('tenan_id', Auth::user()->tenan_id)->count(),
             'total_folders' => Folder::where('tenan_id', Auth::user()->tenan_id)->count(),
             'total_files' => File::where('tenan_id', Auth::user()->tenan_id)->count(),
-            'cantidad_pendientes_revision' => $cantidad_pendientes_revision
+            'cantidad_pendientes_revision' => $cantidad_pendientes_revision,
+            'permissions' => Auth::user()->getPermissions(),
         ]);
     }
 }

@@ -44,6 +44,7 @@
   }
 }
 
+/* added */
 .row-title:hover h6 {
   text-decoration: underline;
 }
@@ -5721,11 +5722,14 @@ fieldset:disabled .btn {
   margin-left: -1px;
 }
 
+/* modified */
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #cb0c9f;
-  border-color: #cb0c9f;
+  /* background-color: #cb0c9f;
+  border-color: #cb0c9f; */
+  background-color: #17c1e8;
+  border-color: #17c1e8;
 }
 
 .page-item.disabled .page-link {

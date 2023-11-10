@@ -1,4 +1,4 @@
-<x-app>
+<x-app :$permissions>
     <x-slot:title>
         Roles and Permissions
     </x-slot:title>

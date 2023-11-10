@@ -11,7 +11,7 @@ use Livewire\Component;
 class ShowDocuments extends Component
 {
     public $folders, $files;
-    public $currentFolderID = null;
+    public $currentFolderID = null, $permissions;
     public $currentPath = [];
     public $folder_name, $description, $edit_folder_id;
 

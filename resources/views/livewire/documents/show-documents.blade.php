@@ -13,12 +13,14 @@
                     @endforeach
                 </h6>
             </div>
+            @if (in_array('documents.create', $permissions))
             <div class="col-xl-2 col-sm-3 text-end">
                 <livewire:documents.create-folder :$currentFolderID />
             </div>
             <div class="col-xl-2 col-sm-3 text-end">
                 <livewire:documents.upload-file :$currentFolderID />
             </div>
+            @endif
         </div>
     </div>
 
@@ -35,6 +37,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                    $canSee = in_array('documents.show', $permissions);
+                    @endphp
                     @foreach($folders as $folder)
                     <tr wire:key="{{ $folder->id }}">
                         <td>
@@ -72,7 +77,7 @@
                     @foreach($files as $file)
                     <tr wire:key="{{ $file->id }}">
                         <td>
-                            <a href="{{route('view.document',$file->id)}}" class="d-flex px-2 py-1 cursor-pointer row-title">
+                            <a @if($canSee)href="{{ route('view.document',$file->id) }}"@endif class="d-flex px-2 py-1 cursor-pointer row-title">
                                 <div>
                                     @switch($file->file_ext)
                                     @case('pdf')

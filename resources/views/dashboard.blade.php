@@ -1,4 +1,4 @@
-<x-app>
+<x-app :$permissions>
     <x-slot:title>
         Dashboard
     </x-slot:title>
