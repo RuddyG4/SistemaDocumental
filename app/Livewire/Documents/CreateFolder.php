@@ -3,6 +3,7 @@
 namespace App\Livewire\Documents;
 
 use App\Models\Documents\Folder;
+use App\Models\Users\Log;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
@@ -29,7 +30,9 @@ class CreateFolder extends Component
         $validated['parent_id'] = $this->currentFolderID;
         $validated['tenan_id'] = auth()->user()->tenan_id;
 
-        Folder::create($validated);
+        $folder = Folder::create($validated);
+        $user = auth()->user();
+        Log::logActivity($user, "New folder $folder->folder_name ($folder->id) created by $user->username ($user->id).");
         $this->dispatch('folder-created');
         $this->dispatch('close-modal');
     }

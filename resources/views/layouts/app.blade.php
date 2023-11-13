@@ -150,7 +150,7 @@
                 </li>
                 @if (in_array('system.log', $permissions))
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('users') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                    <a class="nav-link {{ Request::is('logs') ? 'active' : '' }}" href="{{ route('logs.index') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-file-lines color-foreground"></i>
                         </div>

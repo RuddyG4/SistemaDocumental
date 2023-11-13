@@ -31,7 +31,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
-                    <button type="submit" form="upload-file-form" class="btn bg-gradient-primary">Upload file</button>
+                    <button type="submit" form="upload-file-form" class="btn bg-gradient-primary"  wire.loading.attr="readonly" wire.loading.class="disable">
+                        <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Upload file
+                    </button>
                 </div>
             </div>
         </div>
@@ -42,9 +45,9 @@
 <script>
     const uploadFileModal = new bootstrap.Modal(document.getElementById('uploadFile'));
     document.addEventListener('livewire:initialized', () => {
-       @this.on('close-upload-file-modal', (event) => {
-           uploadFileModal.hide();
-       });
+        @this.on('close-upload-file-modal', (event) => {
+            uploadFileModal.hide();
+        });
     });
 </script>
 @endpush

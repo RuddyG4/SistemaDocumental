@@ -3,6 +3,7 @@
 namespace App\Livewire\Users\Users;
 
 use App\Models\User;
+use App\Models\Users\Log;
 use App\Models\Users\Role;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -24,6 +25,8 @@ class IndexUser extends Component
     {
         $this->roles = $this->getRoles();
         $this->permissions = auth()->user()->getPermissions();
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) accessed users view.");
     }
 
     #[On('user-created')]
@@ -38,6 +41,8 @@ class IndexUser extends Component
         $this->username = $user->username;
         $this->email = $user->email;
         $this->role_id = $user->role_id;
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) accessed to the view of user " . $this->user->username . ' (' . $this->user->id . ')');
     }
 
     public function updateUser()
@@ -50,6 +55,8 @@ class IndexUser extends Component
 
         $this->user->update($data);
 
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) updated the user " . $this->user->username . ' (' . $this->user->id . ')');
         $this->dispatch('user-updated');
     }
 

@@ -4,6 +4,7 @@ namespace App\Livewire\Documents;
 
 use App\Models\Documents\File;
 use App\Models\Documents\VersionHistory;
+use App\Models\Users\Log;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -43,6 +44,9 @@ class UploadFile extends Component
             'tenan_id' => auth()->user()->tenan_id,
             'version' => 1
         ]);
+
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) uploaded a new file $file->file_name ($file->id)");
         $this->dispatch('file-uploaded');
         $this->dispatch('close-upload-file-modal');
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Users\Customer;
+use App\Models\Users\Log;
 use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,17 +27,23 @@ class LoginController extends Controller
             'password' => ['required']
         ]);
         if (!Auth::validate($credentials)) {
-            return redirect('login')->withErrors(['failedAuth' =>'El correo y/o contraseña son incorrectos, verifique e intente nuevamente']);
+            return redirect('login')->withErrors(['failedAuth' => 'El correo y/o contraseña son incorrectos, verifique e intente nuevamente']);
         }
         $user = Auth::getProvider()->retrieveByCredentials($credentials); // Recupera la instancia User perteneciente a $credentials.
         Auth::login($user);
+
+        Log::logActivity($user, "Login by $user->username ($user->id).");
+
         return redirect()->intended('dashboard');
     }
 
     public function logout()
     {
+        $user = Auth::user();
+        Log::logActivity($user, "Logout by $user->username ($user->id).");
         Session::flush();
         Auth::logout();
+
         return redirect()->to('/login');
     }
 
@@ -45,7 +52,8 @@ class LoginController extends Controller
         return view('register');
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $credentials = $request->validate([
             'nombre'   => ['required', 'max:60'],
             'empresa'   => ['required', 'max:60'],
@@ -65,7 +73,7 @@ class LoginController extends Controller
             'tenan_id' => $customer->id
         ]);
 
-       $user = User::create([
+        $user = User::create([
             'role_id' => $role->id,
             'username' => $credentials['nombre'],
             'email' => $credentials['email'],
@@ -73,12 +81,16 @@ class LoginController extends Controller
             'tenan_id' => $customer->id
         ]);
         event(new Registered($user));
+
+        Log::logActivity($user, "Customer $user->username ($user->id) registered successfully.");
         return redirect()->to('/login')->with('success', 'ok');
     }
-    public function resetPasswordView(){
+    public function resetPasswordView()
+    {
         return view('reset-password');
     }
-    public function resetPassword(Request $request){
+    public function resetPassword(Request $request)
+    {
         $credentials = $request->validate([
             'token' => 'required',
             'email'    => ['required', 'email'],
@@ -91,11 +103,11 @@ class LoginController extends Controller
                 $user->password = bcrypt($credentials['password']);
                 $user->save();
                 return redirect()->to('/login')->with('success', 'si');
-            }else{
-                return redirect()->to('/reset-password-view')->withErrors(['failedAuth' =>'Las contraseñas no coinciden']);
+            } else {
+                return redirect()->to('/reset-password-view')->withErrors(['failedAuth' => 'Las contraseñas no coinciden']);
             }
-        }else{
-            return redirect()->to('/reset-password-view')->withErrors(['failedAuth' =>'El correo no existe']);
+        } else {
+            return redirect()->to('/reset-password-view')->withErrors(['failedAuth' => 'El correo no existe']);
         }
     }
 }

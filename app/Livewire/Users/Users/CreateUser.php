@@ -3,6 +3,7 @@
 namespace App\Livewire\Users\Users;
 
 use App\Models\User;
+use App\Models\Users\Log;
 use App\Models\Users\Role;
 use Livewire\Component;
 
@@ -31,8 +32,10 @@ class CreateUser extends Component
         $data['password'] = bcrypt('password');
         $data['tenan_id'] = auth()->user()->tenan_id;
 
-        User::create($data);
+        $newUser = User::create($data);
 
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) created $newUser->username ($newUser->id) successfully.");
         $this->dispatch('user-created');
     }
 

@@ -7,6 +7,7 @@ use App\Models\Documents\File;
 use App\Models\Documents\VersionHistory;
 use App\Models\RevisorFile;
 use App\Models\User;
+use App\Models\Users\Log;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,6 +24,8 @@ class FolderController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) accessed to the view of documents");
         return view('documents.folders.index', [
             'permissions' => auth()->user()->getPermissions(),
         ]);
@@ -72,6 +75,9 @@ class FolderController extends Controller
                 $lista_archivos->push($file_aux);
             }
         }
+
+        $user = auth()->user();
+        Log::logActivity($user, "User $user->username ($user->id) accessed to the view of file " . $file->file_name . ' (' . $file->id . ')');
       /*   dd($file->revisor_file);
         foreach ($file->revisor_file as $key => $value) {
             # code...

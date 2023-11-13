@@ -4,6 +4,7 @@ namespace App\Livewire\Documents;
 
 use App\Models\Documents\File;
 use App\Models\Documents\Folder;
+use App\Models\Users\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -48,6 +49,12 @@ class ShowDocuments extends Component
         $this->currentFolderID = $folder->id;
         $this->updatePath($folder);
         $this->loadView();
+        $user = auth()->user();
+        if ($folder->id == null) {
+            Log::logActivity($user, "User $user->username ($user->id) accessed to the view of documents");
+        } else {
+            Log::logActivity($user, "User $user->username ($user->id) accessed to the view of folder " . $folder->folder_name . ' (' . $folder->id . ')');
+        }
     }
 
     public function updatePath(Folder $folder)
