@@ -80,6 +80,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/evaluar-file', [FolderController::class, 'evaluarFile'])->name('documents.evaluar_file');
 
     Route::get('/a-revision/{id}', [FolderController::class, 'mandaArevision'])->name('documents.mandar_revision');
+
+    Route::get('/backup', [FolderController::class, 'hacerBackup'])->name('documents.backup');
+
+    Route::post('/upload-backup', [FolderController::class, 'uploadBackup'])->name('documents.upload_backup');
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');
