@@ -78,7 +78,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
-                    <button type="submit" wire:loading.attr="disabled" form="show-role-form" class="btn bg-gradient-primary">Update role</button>
+                    <button type="submit" form="show-role-form" class="btn bg-gradient-primary" wire:loading.attr="disabled">
+                        <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Update role
+                    </button>
                 </div>
                 @endif
             </div>
@@ -135,7 +138,7 @@
             showRoleModal.hide();
         });
     });
-    
+
     const showRolePermissionsModal = new bootstrap.Modal(document.getElementById('showRolePermissions'));
     document.addEventListener('livewire:initialized', () => {
         @this.on('role-permissions-updated', (event) => {

@@ -9,7 +9,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createNewUser">Create new role</h5>
+                    <h5 class="modal-title" id="createNewUser">Create New User</h5>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close" wire:click="cancel">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,7 +71,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
-                    <button type="submit" form="create-user-form" class="btn bg-gradient-primary">Create user</button>
+                    <button type="submit" form="create-user-form" class="btn bg-gradient-primary" wire:loading.attr="disabled">
+                        <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Create user
+                    </button>
                 </div>
             </div>
         </div>

@@ -128,7 +128,10 @@
                 <div class="modal-footer">
                     @if($canEdit)
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal" wire:click="cancel">Cancel</button>
-                    <button type="submit" form="show-user-form" class="btn bg-gradient-primary">Update user</button>
+                    <button type="submit" form="show-user-form" class="btn bg-gradient-primary" wire:loading.attr="disabled">
+                        <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Update user
+                    </button>
                     @else
                     <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
                     @endif
