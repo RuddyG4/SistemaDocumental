@@ -122,6 +122,14 @@
                 </li>
                 @endif
                 <li class="nav-item">
+                    <a class="nav-link  {{ Request::is('search-document*') ? 'active' : '' }}" href="{{route('search.document_index')}}">
+                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-search color-foreground"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Search Document</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link  ">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-tags color-foreground"></i>
@@ -137,14 +145,6 @@
                         <span class="nav-link-text ms-1">Trash</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link  {{ Request::is('search-document*') ? 'active' : '' }}" href="{{route('search.document_index')}}">
-                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-search color-foreground"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Search Document</span>
-                    </a>
-                </li>
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">{{ __('System and others') }}</h6>
                 </li>
@@ -155,6 +155,22 @@
                             <i class="fa-solid fa-file-lines color-foreground"></i>
                         </div>
                         <span class="nav-link-text ms-1">{{ __('Log') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('reports/personalizable') ? 'active' : '' }}" href="{{ route('reports.personalizable') }}">
+                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-file-lines color-foreground"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">{{ __('Personalizable Reports') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('reports/executive') ? 'active' : '' }}" href="{{ route('reports.executive') }}">
+                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-file-lines color-foreground"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">{{ __('Executive Reports') }}</span>
                     </a>
                 </li>
                 @endif

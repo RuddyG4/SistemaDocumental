@@ -7,6 +7,7 @@ use App\Models\Documents\File;
 use App\Models\Documents\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -24,6 +25,9 @@ class DocumentController extends Controller
     {
         $folders = Folder::with('user')->where('tenan_id', Auth::user()->tenan_id)->where('parent_id', $folder->id)->get();
         $files = File::where('tenan_id', Auth::user()->tenan_id)->where('folder_id', $folder->id)->get();
+        foreach ($files as $file) {
+            $file->file_path = Storage::url($file->file_path);
+        }
         return response()->json([
             'folders' => $folders,
             'files' => $files

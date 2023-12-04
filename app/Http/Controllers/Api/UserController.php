@@ -17,7 +17,9 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $token = Auth::user()->createToken('auth_token')->plainTextToken;
-            return response()->json($token);
+            $user = Auth::user();
+            $user->role;
+            return response()->json(['token' => $token, 'user' => $user]);
         }
 
         return response()->json("Usuario y/o contraseña incorrectos", 401);

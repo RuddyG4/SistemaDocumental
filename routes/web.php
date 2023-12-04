@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users\RolePermissionController;
 use App\Livewire\Users\Users\IndexUser;
@@ -73,14 +74,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/get-users/{id}', [UserController::class, 'getUserById'])->name('users.get_user_by_id');
 
     Route::post('/guardar-revisores-file', [FolderController::class, 'storeRevisores'])->name('documents.store_revisores');
-
     Route::get('/revision-files', [FolderController::class, 'filesARevisar'])->name('documents.index_files_revision');
-
     Route::get('/show-file-revision/{id}', [FolderController::class, 'showFilesARevisar'])->name('documents.show_files_revision');
-
     Route::post('/evaluar-file', [FolderController::class, 'evaluarFile'])->name('documents.evaluar_file');
-
     Route::get('/a-revision/{id}', [FolderController::class, 'mandaArevision'])->name('documents.mandar_revision');
+
+    Route::get('/reports/personalizable', [ReportController::class, 'personalizable'])->name('reports.personalizable');
+    Route::get('/reports/executive', [ReportController::class, 'executive'])->name('reports.executive');
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');

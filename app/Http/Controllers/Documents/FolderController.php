@@ -54,11 +54,7 @@ class FolderController extends Controller
     {
         $file = File::find($id);
         $rutaDocumento = $file->file_path;
-        if (Storage::exists($rutaDocumento)) {
-            $existe = true;
-        } else {
-            $existe = false;
-        }
+        $existe = Storage::exists($rutaDocumento);
         $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
         $pila_archivos = new Collection();
         $lista_archivos = new Collection();
@@ -78,10 +74,6 @@ class FolderController extends Controller
 
         $user = auth()->user();
         Log::logActivity($user, "User $user->username ($user->id) accessed to the view of file " . $file->file_name . ' (' . $file->id . ')');
-      /*   dd($file->revisor_file);
-        foreach ($file->revisor_file as $key => $value) {
-            # code...
-        } */
         $permissions = auth()->user()->getPermissions();
         return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento', 'file', 'extension', 'lista_archivos', 'permissions'));
     }

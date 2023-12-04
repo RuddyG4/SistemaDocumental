@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             FolderSeeder::class,
             FileSeeder::class,
+            ActivitySeeder::class,
             VersionHistorySeeder::class,
             EstadosFileSeeder::class,
             PermissionRoleSeeder::class,

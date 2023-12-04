@@ -62,12 +62,26 @@
                         @endforeach
                     </div>
                     <div class="col-md-7">
-                        @if($extension == "pdf")
+                        @switch($extension)
+                        @case("pdf")
                         <embed src="{{ route('view.document_d',$id) }}" type="application/pdf" width="100%" height="630">
-                        @endif
-                        @if($extension != "pdf")
+                        @break
+                        @case("docx")
                         <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ route('view.document_d',$id) }}" width="100%" height="630px" frameborder="0"> </iframe>
-                        @endif
+                        @break
+                        @case('jpg')
+                        <img src="{{ Storage::url($file->file_path) }}" width="100%">
+                        @break
+                        @case('png')
+                        <img src="{{ Storage::url($file->file_path) }}" width="100%">
+                        @break
+                        @default
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Archivo no soportado</h6>
+                            </div>
+                        </div>
+                        @endswitch
                     </div>
                     <div class="col-md-3">
                         <div class="card">
