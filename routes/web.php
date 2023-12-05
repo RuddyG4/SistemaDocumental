@@ -84,6 +84,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/backup', [FolderController::class, 'hacerBackup'])->name('documents.backup');
 
     Route::post('/upload-backup', [FolderController::class, 'uploadBackup'])->name('documents.upload_backup');
+
+    Route::get('/membresias', [FolderController::class, 'membresias'])->name('documents.membresias');
+
+    Route::get('/payment/{total}', [FolderController::class, 'payment'])->name('documents.payment');
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');

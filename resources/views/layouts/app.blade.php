@@ -40,6 +40,35 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><!-- jQuery base library needed -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- swit alert -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
+
+    <style>
+        .rainbowText {
+            font-family: arial black;
+            font-size: 20px;
+            background-image:
+                linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: move 500s linear infinite;
+        }
+
+        @keyframes move {
+            to {
+                background-position: 4500vh;
+            }
+        }
+
+
+        .norainbowText {
+            font-family: arial rgb(255, 255, 255);
+            color: white;
+            font-size: 20px;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -181,6 +210,12 @@
                     <h6 class="font-weight-bolder mb-0">{{ $title }}</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+
+                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                        <div class="input-group">
+                            <a href="{{route('documents.membresias')}}" class="rainbowText"><i class="fa-solid fa-folder-plus"></i> Actualizar</a>
+                        </div>
+                    </div>
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                         <div class="input-group">
                             <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>

@@ -31,7 +31,26 @@ class FolderController extends Controller
             'permissions' => auth()->user()->getPermissions(),
         ]);
     }
+    //
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function payment($total)
+    {
+        return view('membresias.pay',compact('total'), [
+            'permissions' => auth()->user()->getPermissions(),
+        ]);
+    }
+ /**
+     * Display a listing of the resource.
+     */
+    public function membresias()
+    {
+        return view('membresias.index', [
+            'permissions' => auth()->user()->getPermissions(),
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -319,7 +338,10 @@ class FolderController extends Controller
                 }
                 $zip->close();
             }
-            $url = 'http://149.50.133.183:3000/api/backups/upload';
+
+            // $url = 'http://149.50.133.183:3000/api/backups/upload';
+            // $url = 'https://backup-service-si2.onrender.com/api/backups/upload';
+            $url = 'https://backup-service-si2.onrender.com/api/backups/upload';
             $datos = [
                 'name' => 'backupuno',
             ];
@@ -331,23 +353,23 @@ class FolderController extends Controller
                 return $respuesta->status();
             }
         } else {
-            $url = 'http://149.50.133.183:3000/api/backups/download?name=backup.zip';
+            // $url = 'http://149.50.133.183:3000/api/backups/download?name=backup.zip';
+            $url = 'https://backup-service-si2.onrender.com/api/backups/download?name=backup.zip';
             $zipFileName = public_path('storage/documents/backup.zip');
             $zipContent = file_get_contents($url);
             if ($zipContent !== false) {
                 file_put_contents($zipFileName, $zipContent);
 
-                // Descomprimir el archivo ZIP
                 if ($zip->open($zipFileName) === true) {
                     $zip->extractTo(public_path('storage/documents'));
                     $zip->close();
+                    unlink($zipFileName);
                     return response()->json(
                         [
                             'success' => true,
                             'msj' => 'Archivo ZIP descargado y descomprimido exitosamente.'
                         ]
                     );
-                    // return 'Archivo ZIP descargado y descomprimido exitosamente.';
                 } else {
                     return response()->json(
                         [
@@ -355,7 +377,6 @@ class FolderController extends Controller
                             'msj' => 'Error al abrir el archivo ZIP descargado.'
                         ]
                     );
-                    // return 'Error al abrir el archivo ZIP descargado.';
                 }
             } else {
                 return response()->json(
@@ -364,7 +385,6 @@ class FolderController extends Controller
                         'msj' => 'Error al descargar el archivo ZIP.'
                     ]
                 );
-                // return 'Error al descargar el archivo ZIP.';
             }
         }
     }
