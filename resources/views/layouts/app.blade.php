@@ -129,38 +129,22 @@
                         <span class="nav-link-text ms-1">Search Document</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link  ">
-                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-tags color-foreground"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Categories</span>
-                    </a>
-                </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link  ">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-trash color-foreground"></i>
                         </div>
                         <span class="nav-link-text ms-1">Trash</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">{{ __('System and others') }}</h6>
                 </li>
                 @if (in_array('system.log', $permissions))
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('logs') ? 'active' : '' }}" href="{{ route('logs.index') }}">
-                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-file-lines color-foreground"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">{{ __('Log') }}</span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link {{ Request::is('reports/personalizable') ? 'active' : '' }}" href="{{ route('reports.personalizable') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-file-lines color-foreground"></i>
+                            <i class="fa-solid fa-table color-foreground"></i>
                         </div>
                         <span class="nav-link-text ms-1">{{ __('Personalizable Reports') }}</span>
                     </a>
@@ -168,9 +152,25 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('reports/executive') ? 'active' : '' }}" href="{{ route('reports.executive') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-file-lines color-foreground"></i>
+                            <i class="fa-solid fa-chart-line color-foreground"></i>
                         </div>
                         <span class="nav-link-text ms-1">{{ __('Executive Reports') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('subscriptions*') ? 'active' : '' }}" href="{{ route('subscriptions.index') }}">
+                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-credit-card color-foreground"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">{{ __('Subscription') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('logs') ? 'active' : '' }}" href="{{ route('logs.index') }}">
+                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-file-lines color-foreground"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">{{ __('Log') }}</span>
                     </a>
                 </li>
                 @endif

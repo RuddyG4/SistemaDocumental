@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_subscription', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('subscription_date');
-            $table->unsignedInteger('subscription_id');
-            $table->foreign('subscription_id')->references('id')->on('subscriptions');
+            $table->unsignedInteger('plan_id');
+            $table->foreign('plan_id')->references('id')->on('plans');
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->timestamps();
+
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->char('status', 1); // A = Active, E = Expired, W = Waiting, C = Canceled
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_subscription');
+        Schema::dropIfExists('subscriptions');
     }
 };

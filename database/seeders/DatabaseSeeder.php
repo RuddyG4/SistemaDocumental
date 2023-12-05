@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             VersionHistorySeeder::class,
             EstadosFileSeeder::class,
             PermissionRoleSeeder::class,
+            PlanSeeder::class,
+            PlanDetailSeeder::class,
+            SubscriptionSeeder::class
         ]);
     }
 }

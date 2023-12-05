@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Documents;
 
+use App\Models\Activity;
 use App\Models\Documents\File;
 use App\Models\Documents\Folder;
 use App\Models\Users\Log;
@@ -54,6 +55,11 @@ class ShowDocuments extends Component
             Log::logActivity($user, "User $user->username ($user->id) accessed to the view of documents");
         } else {
             Log::logActivity($user, "User $user->username ($user->id) accessed to the view of folder " . $folder->folder_name . ' (' . $folder->id . ')');
+            Activity::create([
+                'activity' => 'view_folder',
+                'activity_id' => $folder->id,
+                'tenan_id' => $user->tenan_id
+            ]);
         }
     }
 
@@ -117,6 +123,11 @@ class ShowDocuments extends Component
 
     public function downloadFile(File $file)
     {
+        Activity::create([
+            'activity' => 'download_file',
+            'activity_id' => $file->id,
+            'tenan_id' => auth()->user()->tenan_id
+        ]);
         return Storage::download($file->file_path, $file->file_name);
     }
 

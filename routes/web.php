@@ -4,14 +4,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Documents\FolderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Users\RolePermissionController;
 use App\Livewire\Users\Users\IndexUser;
-use App\Models\RevisorFile;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 /*
@@ -81,6 +80,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/reports/personalizable', [ReportController::class, 'personalizable'])->name('reports.personalizable');
     Route::get('/reports/executive', [ReportController::class, 'executive'])->name('reports.executive');
+
+    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::get('/subscriptions/change-plan/{id}', [SubscriptionController::class, 'changePlan'])->name('subscriptions.change-plan');
+    Route::post('/subscriptions/change-plan/{id}', [SubscriptionController::class, 'confirmPlanChange'])->name('subscriptions.confirm-plan-change');
 });
 
 Route::get('/view-document_d/{id}', [FolderController::class, 'preVisualizacion'])->name('view.document_d');

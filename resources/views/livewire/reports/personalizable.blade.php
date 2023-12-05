@@ -3,22 +3,21 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
-                    <span class="col-12 col-sm-3"><b>Select one :</b></span>
+                    <span class="col-12 col-sm-3"><b>Select time :</b></span>
                     <div class="form-check mt-2 col-12 col-sm-3">
                         <input class="form-check-input" type="radio" wire:model.live="option" value="per_month" id="per_month">
                         <label class="custom-control-label" for="per_month">Per month</label>
                     </div>
                     <div class="form-check col-12 col-sm-3">
                         <input class="form-check-input" type="radio" wire:model.live="option" value="per_week" id="per_week">
-                        <label class="custom-control-label" for="per_week">Per week</label>
+                        <label class="custom-control-label" for="per_week">Per week (Last 8 weeks)</label>
                     </div>
                     <div class="form-check col-12 col-sm-3">
                         <input class="form-check-input" type="radio" wire:model.live="option" value="per_day" id="per_day">
-                        <label class="custom-control-label" for="per_day">Per day</label>
+                        <label class="custom-control-label" for="per_day">Per day (Last 15 day)</label>
                     </div>
                 </div>
             </div>
-            {{ $option}}
 
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive">
@@ -26,243 +25,173 @@
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ __('Time')}}</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ $title1 }}</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ $title2 }}</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Completion</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Folders viewed</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Folders downloaded</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Files viewed</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Files downloaded</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                            $total_folder_viewed = 0;
+                            $total_folder_downloaded = 0;
+                            $total_file_viewed = 0;
+                            $total_file_downloaded = 0;
+                            @endphp
+                            @if ($option == 'per_month')
+                            @foreach ($times as $time)
                             <tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../assets/img/small-logos/logo-xd.svg" class="avatar avatar-sm me-3" alt="xd">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Soft UI XD Version</h6>
+                                            <h6 class="mb-0 text-sm">{{ $time }}</h6>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../assets/img/team-1.jpg" alt="team1">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../assets/img/team-2.jpg" alt="team2">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                                            <img src="../assets/img/team-3.jpg" alt="team3">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../assets/img/team-4.jpg" alt="team4">
-                                        </a>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $14,000 </span>
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['folders_viewed'] }} </span>
                                 </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">60%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['folders_downloaded'] }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['files_viewed'] }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['files_downloaded'] }} </span>
+                                </td>
+                                @php
+                                $total_folder_viewed += $data[$time]['folders_viewed'];
+                                $total_folder_downloaded += $data[$time]['folders_downloaded'];
+                                $total_file_viewed += $data[$time]['files_viewed'];
+                                $total_file_downloaded += $data[$time]['files_downloaded'];
+                                @endphp
+                            </tr>
+                            @endforeach
+                            <tr class="bg-gray-200">
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">Total</h6>
                                         </div>
                                     </div>
                                 </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_folder_viewed }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_folder_downloaded }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_file_viewed }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_file_downloaded }} </span>
+                                </td>
                             </tr>
+                            @elseif ($option == 'per_week')
+                            @foreach ($times as $index => $time)
                             <tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../assets/img/small-logos/logo-atlassian.svg" class="avatar avatar-sm me-3" alt="atlassian">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Add Progress Track</h6>
+                                            <h6 class="mb-0 text-sm">hace {{ $loop->index }} semana(s)</h6>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../assets/img/team-2.jpg" alt="team5">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../assets/img/team-4.jpg" alt="team6">
-                                        </a>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $3,000 </span>
+                                    <span class="text-xs font-weight-bold"> {{ $data[$index]['folders_viewed'] }} </span>
                                 </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">10%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$index]['folders_downloaded'] }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$index]['files_viewed'] }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$index]['files_downloaded'] }} </span>
+                                </td>
+                                @php
+                                $total_folder_viewed += $data[$index]['folders_viewed'];
+                                $total_folder_downloaded += $data[$index]['folders_downloaded'];
+                                $total_file_viewed += $data[$index]['files_viewed'];
+                                $total_file_downloaded += $data[$index]['files_downloaded'];
+                                @endphp
+                            </tr>
+                            @endforeach
+                            <tr class="bg-gray-200">
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">Total</h6>
                                         </div>
                                     </div>
                                 </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_folder_viewed }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_folder_downloaded }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_file_viewed }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_file_downloaded }} </span>
+                                </td>
                             </tr>
+                            @elseif ($option == 'per_day')
+                            @foreach ($times as $time)
                             <tr>
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../assets/img/small-logos/logo-slack.svg" class="avatar avatar-sm me-3" alt="team7">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Fix Platform Errors</h6>
+                                            <h6 class="mb-0 text-sm">{{ $time }}</h6>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../assets/img/team-3.jpg" alt="team8">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../assets/img/team-1.jpg" alt="team9">
-                                        </a>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> Not set </span>
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['folders_viewed'] }} </span>
                                 </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">100%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['folders_downloaded'] }} </span>
                                 </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['files_viewed'] }} </span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $data[$time]['files_downloaded'] }} </span>
+                                </td>
+                                @php
+                                $total_folder_viewed += $data[$time]['folders_viewed'];
+                                $total_folder_downloaded += $data[$time]['folders_downloaded'];
+                                $total_file_viewed += $data[$time]['files_viewed'];
+                                $total_file_downloaded += $data[$time]['files_downloaded'];
+                                @endphp
                             </tr>
-                            <tr>
+                            @endforeach
+                            <tr class="bg-gray-200">
                                 <td>
                                     <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm me-3" alt="spotify">
-                                        </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Launch our Mobile App</h6>
+                                            <h6 class="mb-0 text-sm">Total</h6>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../assets/img/team-4.jpg" alt="user1">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
-                                            <img src="../assets/img/team-3.jpg" alt="user2">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
-                                            <img src="../assets/img/team-4.jpg" alt="user3">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../assets/img/team-1.jpg" alt="user4">
-                                        </a>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $20,500 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">100%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-success w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../assets/img/small-logos/logo-jira.svg" class="avatar avatar-sm me-3" alt="jira">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Add the New Pricing Page</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../assets/img/team-4.jpg" alt="user5">
-                                        </a>
-                                    </div>
+                                    <span class="text-xs font-weight-bold"> {{ $total_folder_viewed }} </span>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $500 </span>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">25%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="25"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div>
-                                            <img src="../assets/img/small-logos/logo-invision.svg" class="avatar avatar-sm me-3" alt="invision">
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">Redesign New Online Shop</h6>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
-                                            <img src="../assets/img/team-1.jpg" alt="user6">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
-                                            <img src="../assets/img/team-4.jpg" alt="user7">
-                                        </a>
-                                    </div>
+                                    <span class="text-xs font-weight-bold"> {{ $total_folder_downloaded }} </span>
                                 </td>
                                 <td class="align-middle text-center text-sm">
-                                    <span class="text-xs font-weight-bold"> $2,000 </span>
+                                    <span class="text-xs font-weight-bold"> {{ $total_file_viewed }} </span>
                                 </td>
-                                <td class="align-middle">
-                                    <div class="progress-wrapper w-75 mx-auto">
-                                        <div class="progress-info">
-                                            <div class="progress-percentage">
-                                                <span class="text-xs font-weight-bold">40%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-gradient-info w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
-                                        </div>
-                                    </div>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-xs font-weight-bold"> {{ $total_file_downloaded }} </span>
                                 </td>
                             </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

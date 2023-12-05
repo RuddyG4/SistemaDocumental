@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 60);
-            $table->decimal('price', 10, 2, true);
-            $table->unsignedSmallInteger('duration');
+            $table->string('plan_name', 60);
+            $table->string('plan_description');
+            $table->decimal('plan_price', 10, 2, true);
+            $table->unsignedSmallInteger('plan_duration');
+            $table->datetime('created_at')->useCurrent();
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('plans');
     }
 };
