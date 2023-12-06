@@ -80,6 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/reports/personalizable', [ReportController::class, 'personalizable'])->name('reports.personalizable');
     Route::get('/reports/executive', [ReportController::class, 'executive'])->name('reports.executive');
+    Route::get('/reports/pdf/{option}', [ReportController::class, 'pdf'])->name('reports.pdf');
 
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::get('/subscriptions/change-plan/{id}', [SubscriptionController::class, 'changePlan'])->name('subscriptions.change-plan');

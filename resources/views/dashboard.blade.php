@@ -98,4 +98,46 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12 mb-lg-0 mb-4">
+            <div class="card z-index-2">
+                <div class="card-body p-3">
+                    <div class="border-radius-lg py-3 pe-1 mb-3">
+                        <div class="chart">
+                            <canvas id="myChart" class="chart-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @push('scripts')
+    <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+        let data = @json($data);
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Folders created', 'Folders viewed', 'Files viewed', 'Files uploaded', 'Folders downloaded', 'Files downloaded'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [data.folders_created, data.files_uploaded, data.folders_viewed, data.files_viewed, data.folders_downloaded, data.files_downloaded],
+                    backgroundColor: '#141727',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        height: 200
+                    }
+                }
+            }
+        });
+    </script>
+    @endpush
 </x-app>

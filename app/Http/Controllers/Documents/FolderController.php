@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Documents;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Documents\File;
 use App\Models\Documents\VersionHistory;
 use App\Models\RevisorFile;
@@ -75,6 +76,11 @@ class FolderController extends Controller
         $user = auth()->user();
         Log::logActivity($user, "User $user->username ($user->id) accessed to the view of file " . $file->file_name . ' (' . $file->id . ')');
         $permissions = auth()->user()->getPermissions();
+        Activity::create([
+            'activity' => 'view_file',
+            'activity_id' => $file->id,
+            'tenan_id' => $user->tenan_id
+        ]);
         return view('livewire.documents.files.show-file', compact('id', 'rutaDocumento', 'file', 'extension', 'lista_archivos', 'permissions'));
     }
 

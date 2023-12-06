@@ -3,8 +3,8 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="row">
-                    <span class="col-12 col-sm-3"><b>Select time :</b></span>
-                    <div class="form-check mt-2 col-12 col-sm-3">
+                    <span class="col-12 col-sm-2"><b>Select time :</b></span>
+                    <div class="form-check mt-2 col-12 col-sm-2">
                         <input class="form-check-input" type="radio" wire:model.live="option" value="per_month" id="per_month">
                         <label class="custom-control-label" for="per_month">Per month</label>
                     </div>
@@ -15,6 +15,9 @@
                     <div class="form-check col-12 col-sm-3">
                         <input class="form-check-input" type="radio" wire:model.live="option" value="per_day" id="per_day">
                         <label class="custom-control-label" for="per_day">Per day (Last 15 day)</label>
+                    </div>
+                    <div class="col-12 col-sm-2">
+                        <a href="{{ route('reports.pdf', $option) }}" class="btn btn-warning text-dark"><i class="fa-solid fa-download"></i> &nbsp; PDF</a>
                     </div>
                 </div>
             </div>
