@@ -121,7 +121,7 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Folders created', 'Folders viewed', 'Files viewed', 'Files uploaded', 'Folders downloaded', 'Files downloaded'],
+                labels: ['Folders created', 'Files uploaded', 'Folders viewed', 'Files viewed', 'Folders downloaded', 'Files downloaded'],
                 datasets: [{
                     label: '# of Votes',
                     data: [data.folders_created, data.files_uploaded, data.folders_viewed, data.files_viewed, data.folders_downloaded, data.files_downloaded],
