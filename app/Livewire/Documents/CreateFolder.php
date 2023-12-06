@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Documents;
 
+use App\Models\Activity;
 use App\Models\Documents\Folder;
 use App\Models\Users\Log;
 use Livewire\Attributes\Reactive;
@@ -33,6 +34,12 @@ class CreateFolder extends Component
         $folder = Folder::create($validated);
         $user = auth()->user();
         Log::logActivity($user, "New folder $folder->folder_name ($folder->id) created by $user->username ($user->id).");
+        Activity::create([
+            'activity' => 'create_folder',
+            'activity_id' => $folder->id,
+            'tenan_id' => auth()->user()->tenan_id,
+            'created_at' => now()
+        ]);
         $this->dispatch('folder-created');
         $this->dispatch('close-modal');
     }

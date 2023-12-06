@@ -7,7 +7,7 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="createFolder" tabindex="-1" role="dialog" aria-labelledby="createNewFolder" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="createFolder" tabindex="-1" role="dialog" aria-labelledby="createNewFolder" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -22,6 +22,9 @@
                             <div class="col">
                                 <div class="form-group">
                                     <input type="text" wire:model="folder_name" class="form-control" id="folder_name" placeholder="Folder name">
+                                    @error('folder_name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -29,6 +32,9 @@
                             <div class="col">
                                 <div class="form-group">
                                     <input type="text" wire:model="description" class="form-control" id="folder_description" placeholder="Folder description">
+                                    @error('description')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -47,9 +53,9 @@
 <script>
     const modal = new bootstrap.Modal(document.getElementById('createFolder'));
     document.addEventListener('livewire:initialized', () => {
-       @this.on('close-modal', (event) => {
-           modal.hide();
-       });
+        @this.on('close-modal', (event) => {
+            modal.hide();
+        });
     });
 </script>
 @endpush

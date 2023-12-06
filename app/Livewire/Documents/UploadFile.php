@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Documents;
 
+use App\Models\Activity;
 use App\Models\Documents\File;
 use App\Models\Documents\VersionHistory;
 use App\Models\Users\Log;
@@ -43,6 +44,12 @@ class UploadFile extends Component
             'file_id' => $file->id,
             'tenan_id' => auth()->user()->tenan_id,
             'version' => 1
+        ]);
+
+        Activity::create([
+            'activity' => 'upload_file',
+            'activity_id' => $file->id,
+            'tenan_id' => auth()->user()->tenan_id
         ]);
 
         $user = auth()->user();
