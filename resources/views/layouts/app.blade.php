@@ -150,14 +150,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('reports/executive') ? 'active' : '' }}" href="{{ route('reports.executive') }}">
-                        <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-chart-line color-foreground"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">{{ __('Executive Reports') }}</span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link {{ Request::is('subscriptions*') ? 'active' : '' }}" href="{{ route('subscriptions.index') }}">
                         <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa-solid fa-credit-card color-foreground"></i>
