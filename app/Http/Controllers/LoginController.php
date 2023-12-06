@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Users\Customer;
 use App\Models\Users\Log;
+use App\Models\Users\Permission;
 use App\Models\Users\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +74,9 @@ class LoginController extends Controller
             'tenan_id' => $customer->id
         ]);
 
+        $permissions = Permission::pluck('id');
+        $role->permissions()->attach($permissions);
+
         $user = User::create([
             'role_id' => $role->id,
             'username' => $credentials['nombre'],
@@ -80,6 +84,7 @@ class LoginController extends Controller
             'password' => bcrypt($credentials['password']),
             'tenan_id' => $customer->id
         ]);
+
         event(new Registered($user));
 
         Log::logActivity($user, "Customer $user->username ($user->id) registered successfully.");

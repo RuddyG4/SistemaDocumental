@@ -61,5 +61,101 @@ class FolderSeeder extends Seeder
             'created_at' => $folder->created_at,
             'tenan_id' => $folder->tenan_id
         ]);
+
+        $folder = Folder::create([
+            'folder_name' => 'Subfolder 1',
+            'description' => 'Documentos de recursos humanos',
+            'parent_id' => 3,
+            'tenan_id' => 1,
+            'user_id' => 1,
+            'created_at' => now()->subMonths(10),
+            'updated_at' => now()->subMonths(10)
+        ]);
+        Activity::create([
+            'activity_id' => $folder->id,
+            'activity' => 'create_folder',
+            'created_at' => $folder->created_at,
+            'tenan_id' => $folder->tenan_id
+        ]);
+        
+        $folder = Folder::create([
+            'folder_name' => 'Subfolder 2',
+            'description' => 'Documentos de recursos humanos',
+            'parent_id' => 3,
+            'tenan_id' => 1,
+            'user_id' => 1,
+            'created_at' => now()->subMonths(10),
+            'updated_at' => now()->subMonths(10)
+        ]);
+        Activity::create([
+            'activity_id' => $folder->id,
+            'activity' => 'create_folder',
+            'created_at' => $folder->created_at,
+            'tenan_id' => $folder->tenan_id
+        ]);
+        
+        $folder = Folder::create([
+            'folder_name' => 'Subfolder 1',
+            'description' => 'Documentos de recursos humanos',
+            'parent_id' => 1,
+            'tenan_id' => 1,
+            'user_id' => 1,
+            'created_at' => now()->subMonths(10),
+            'updated_at' => now()->subMonths(10)
+        ]);
+        Activity::create([
+            'activity_id' => $folder->id,
+            'activity' => 'create_folder',
+            'created_at' => $folder->created_at,
+            'tenan_id' => $folder->tenan_id
+        ]);
+        
+        $folder = Folder::create([
+            'folder_name' => 'Subfolder 2',
+            'description' => 'Documentos de recursos humanos',
+            'parent_id' => 1,
+            'tenan_id' => 1,
+            'user_id' => 1,
+            'created_at' => now()->subMonths(10),
+            'updated_at' => now()->subMonths(10)
+        ]);
+        Activity::create([
+            'activity_id' => $folder->id,
+            'activity' => 'create_folder',
+            'created_at' => $folder->created_at,
+            'tenan_id' => $folder->tenan_id
+        ]);
+        
+        $folder = Folder::create([
+            'folder_name' => 'Subfolder 1',
+            'description' => 'Documentos de recursos humanos',
+            'parent_id' => 2,
+            'tenan_id' => 1,
+            'user_id' => 1,
+            'created_at' => now()->subMonths(5),
+            'updated_at' => now()->subMonths(5)
+        ]);
+        Activity::create([
+            'activity_id' => $folder->id,
+            'activity' => 'create_folder',
+            'created_at' => $folder->created_at,
+            'tenan_id' => $folder->tenan_id
+        ]);
+        
+        $folder = Folder::create([
+            'folder_name' => 'Subfolder 2',
+            'description' => 'Documentos de recursos humanos',
+            'parent_id' => 2,
+            'tenan_id' => 1,
+            'user_id' => 1,
+            'created_at' => now()->subMonths(5),
+            'updated_at' => now()->subMonths(5)
+        ]);
+        Activity::create([
+            'activity_id' => $folder->id,
+            'activity' => 'create_folder',
+            'created_at' => $folder->created_at,
+            'tenan_id' => $folder->tenan_id
+        ]);
     }
 }
