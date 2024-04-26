@@ -1,4 +1,4 @@
-<x-app :$permissions>
+<x-app>
     <x-slot:title>
         Log
     </x-slot:title>

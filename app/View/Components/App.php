@@ -12,10 +12,12 @@ class App extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public Array $permissions
+        public Array $permissions = []
     )
     {
-        //
+        if (empty($this->permissions)) {
+            $this->permissions = auth()->user()->getPermissions();
+        }
     }
 
     /**
